@@ -80,24 +80,4 @@ public class Plot extends JPanel {
         }
         graphics.draw(new Line2D.Double(point1.getX(), -point1.getY(), point2.getX(), -point2.getY()));
     }
-
-    private ArrayList<Double> executeOrdinaryLeastSquaresByLine(ArrayList<Double> listX, ArrayList<Double> listY){
-        int n = listX.size();
-    }
-
-    private double calculateSum(ArrayList<Double> list){
-        double sum = 0;
-        for (Double element : list) {
-            sum += element;
-        }
-        return  sum;
-    }
-
-    private ArrayList<Double> multiplyElementsOfLists(ArrayList<Double> listX, ArrayList<Double> listY){
-        ArrayList<Double> resultList = new ArrayList<>();
-        for (int i = 0; i < listX.size(); i++){
-            resultList.add(listX.get(i) * listY.get(i));
-        }
-        return resultList;
-    }
 }
