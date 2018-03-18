@@ -8,6 +8,39 @@ public class Plot extends JPanel {
     private double unitVectorSize;
     private double x0;
     private double y0;
+    private ArrayList<Point> points;
+
+    public ArrayList<Point> getPoints() {
+        return points;
+    }
+
+    public void setPoints(ArrayList<Point> points) {
+        this.points = points;
+    }
+
+    public double getUnitVectorSize() {
+        return unitVectorSize;
+    }
+
+    public void setUnitVectorSize(double unitVectorSize) {
+        this.unitVectorSize = unitVectorSize;
+    }
+
+    public double getX0() {
+        return x0;
+    }
+
+    public void setX0(double x0) {
+        this.x0 = x0;
+    }
+
+    public double getY0() {
+        return y0;
+    }
+
+    public void setY0(double y0) {
+        this.y0 = y0;
+    }
 
     @Override
     public Dimension getPreferredSize() {
@@ -22,12 +55,15 @@ public class Plot extends JPanel {
         // All coordinates below center canvas are negative
         this.graphics = (Graphics2D) graphics;
         this.graphics.translate(getWidth() / 2, getHeight() / 2);
+        drawAxis();
+        drawLinesForCoordinateGrid();
     }
 
     public Plot() {
         unitVectorSize = 20;
         x0 = 0;
         y0 = 0;
+        points = new ArrayList<>();
     }
 
     private void drawLinesForCoordinateGrid() {
@@ -57,6 +93,10 @@ public class Plot extends JPanel {
         graphics.drawString("20", (int) unitVectorSize - 12, 10);
         graphics.drawString("20", 4, (int) -unitVectorSize);
         graphics.setFont(new Font("TimesRoman", Font.BOLD, 15));
+    }
+
+    public void addPoint(Point newPoint){
+        points.add(newPoint);
     }
 
     private void drawLine(Point point1, Point point2, TypeOfLine typeOfLine) {
