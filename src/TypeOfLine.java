@@ -1,6 +1,7 @@
 public enum TypeOfLine {
     COORDINATEGridLine,
     AXISLine,
-    CURVELine,
+    LINE,
+    PARABOLA,
     DIMENSIONLine
 }

@@ -3,13 +3,58 @@ import java.util.ArrayList;
 public class MNK_Class {
     private ArrayList<Double> listX;
     private ArrayList<Double> listY;
+    private double aLine;
+    private double bLine;
+    private double aParabola;
+    private double bParabola;
+    private double cParabola;
 
     public MNK_Class(ArrayList<Double> listX, ArrayList<Double> listY){
         this.listX = listX;
         this.listY = listY;
     }
 
-    public ArrayList<Point> calculatePointsUsingOrdinaryLeastSquaresByLine(ArrayList<Double> listX, ArrayList<Double> listY){
+    public double getaLine() {
+        return aLine;
+    }
+
+    public void setaLine(double aLine) {
+        this.aLine = aLine;
+    }
+
+    public double getbLine() {
+        return bLine;
+    }
+
+    public void setbLine(double bLine) {
+        this.bLine = bLine;
+    }
+
+    public double getbParabola() {
+        return bParabola;
+    }
+
+    public void setbParabola(double bParabola) {
+        this.bParabola = bParabola;
+    }
+
+    public double getaParabola() {
+        return aParabola;
+    }
+
+    public void setaParabola(double aParabola) {
+        this.aParabola = aParabola;
+    }
+
+    public double getcParabola() {
+        return cParabola;
+    }
+
+    public void setcParabola(double cParabola) {
+        this.cParabola = cParabola;
+    }
+
+    public ArrayList<Point> calculatePointsUsingOrdinaryLeastSquaresByLine(){
         ArrayList<Point> points = new ArrayList<>();
         int n = listX.size();
         double sumOfListX = calculateSum(listX);
@@ -18,16 +63,16 @@ public class MNK_Class {
         double sumOfMultipliedListXListY = calculateSum(multiplyItemsFromTwoLists(listX, listY));
         Matrix mainMatrix = new Matrix(sumOfListX, n, sumOfSquaredListX, sumOfListX);
         double mainDeterminant = mainMatrix.getDeterminant();
-        double a = calculateCoefficient(mainDeterminant, new Matrix(sumOfListY, n, sumOfMultipliedListXListY, sumOfListX));
-        double b = calculateCoefficient(mainDeterminant, new Matrix(sumOfListX, sumOfListY, sumOfSquaredListX, sumOfMultipliedListXListY));
-        for (int x = -50; x <= 50; x += 1){
-            double y = a * x + b;
+        aLine = calculateCoefficient(mainDeterminant, new Matrix(sumOfListY, n, sumOfMultipliedListXListY, sumOfListX));
+        bLine = calculateCoefficient(mainDeterminant, new Matrix(sumOfListX, sumOfListY, sumOfSquaredListX, sumOfMultipliedListXListY));
+        for (int x = -500; x <= 500; x += 1){
+            double y = aLine * x + bLine;
             points.add(new Point(x, y));
         }
         return points;
     }
 
-    public ArrayList<Point> calculatePointsUsingOrdinaryLeastSquaresByParabola(ArrayList<Double> listX, ArrayList<Double> listY){
+    public ArrayList<Point> calculatePointsUsingOrdinaryLeastSquaresByParabola(){
         ArrayList<Point> points = new ArrayList<>();
         int n = listX.size();
         double sumOfListX = calculateSum(listX);
@@ -40,13 +85,13 @@ public class MNK_Class {
         Matrix mainMatrix = new Matrix(sumOfSquaredListX, sumOfListX, n, sumOfCubedListX, sumOfSquaredListX, sumOfListX, sumOfListXInFourthDegree, sumOfCubedListX, sumOfSquaredListX);
         double mainDeterminant = mainMatrix.getDeterminant();
         Matrix matrixA = new Matrix(sumOfListY, sumOfListX, n, sumOfMultipliedListXListY, sumOfSquaredListX, sumOfListX, sumOfMultipliedSquaredListXListY, sumOfCubedListX, sumOfSquaredListX);
-        double a = calculateCoefficient(mainDeterminant, matrixA);
+        aParabola = calculateCoefficient(mainDeterminant, matrixA);
         Matrix matrixB = new Matrix(sumOfSquaredListX, sumOfListY, n, sumOfCubedListX, sumOfMultipliedListXListY, sumOfListX, sumOfListXInFourthDegree, sumOfMultipliedSquaredListXListY, sumOfSquaredListX);
-        double b = calculateCoefficient(mainDeterminant, matrixB);
+        bParabola = calculateCoefficient(mainDeterminant, matrixB);
         Matrix matrixC = new Matrix(sumOfSquaredListX, sumOfListX, sumOfListY, sumOfCubedListX, sumOfSquaredListX, sumOfMultipliedListXListY, sumOfListXInFourthDegree, sumOfCubedListX, sumOfMultipliedSquaredListXListY);
-        double c = calculateCoefficient(mainDeterminant, matrixC);
-        for (int x = -50; x <= 50; x += 1){
-            double y = a * Math.pow(x, 2) + b * x + c;
+        cParabola = calculateCoefficient(mainDeterminant, matrixC);
+        for (int x = -500; x <= 500; x += 1){
+            double y = aParabola * Math.pow(x, 2) + bParabola * x + cParabola;
             points.add(new Point(x, y));
         }
         return points;

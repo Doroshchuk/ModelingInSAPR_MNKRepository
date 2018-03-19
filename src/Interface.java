@@ -10,6 +10,8 @@ public class Interface {
     private JFrame frame;
     private Plot plot;
     private Font font = new Font("TimesRoman", Font.PLAIN, 10);
+    JCheckBox checkBoxMNKByLine;
+    JCheckBox checkBoxMNKByParabola;
 
     public static void main(String[] args) {
         new Interface();
@@ -61,6 +63,8 @@ public class Interface {
             if(plot.getPoints().contains(newPoint)) {
                 repaintSelectedPoint(newPoint);
             } else addNewPointAndRepaint(newPoint);
+            checkBoxMNKByLine.setSelected(false);
+            checkBoxMNKByParabola.setSelected(false);
         });
 
         JButton removeSelectedPointBtn = createButton(new int[]{100, 110, 40, 40}, "Images/executing.png", inputPanel, (ActionEvent event) -> {
@@ -72,6 +76,8 @@ public class Interface {
                 String messageText = "Вы не выбрали точку для удаления.";
                 messageLbl.setText("<html><div style='text-align: center;'>" + messageText + "</div></html>");
             }
+            checkBoxMNKByLine.setSelected(false);
+            checkBoxMNKByParabola.setSelected(false);
         });
 
         JButton removeAllPointsBtn = createButton(new int[]{160, 110, 40, 40}, "Images/executing.png", inputPanel, (ActionEvent event) -> {
@@ -79,21 +85,60 @@ public class Interface {
             plot.getPoints().clear();
             plot.setChoice(false);
             repaintDrawingPanel(plot);
+            checkBoxMNKByLine.setSelected(false);
+            checkBoxMNKByParabola.setSelected(false);
         });
 
-        JCheckBox checkBox = new JCheckBox();
-        checkBox.setText("Execute MNK by line");
-        checkBox.addActionListener(e -> {
+        checkBoxMNKByLine = new JCheckBox();
+        checkBoxMNKByLine.setText("MNK by Line");
+
+        checkBoxMNKByParabola = new JCheckBox();
+        checkBoxMNKByParabola.setText("MNK by Parabola");
+
+        JLabel lblForCoefMNKByLine = createLabel("", new int[]{130, 200, 60, 40}, inputPanel);
+        lblForCoefMNKByLine.setVisible(false);
+        checkBoxMNKByLine.addActionListener(e -> {
             JCheckBox choice = (JCheckBox) e.getSource();
             if (choice.isSelected()) {
-
+                if(plot.getPoints().isEmpty())
+                    messageLbl.setText("Укажите точки для исполнения мнк.");
+                else {
+                    plot.setExecutingMNKByLine(true);
+                    repaintDrawingPanel(plot);
+                    messageLbl.setText("");
+                    lblForCoefMNKByLine.setVisible(true);
+                    lblForCoefMNKByLine.setText("a: " + plot.getMnk_class().getaLine() + ", b: " + plot.getMnk_class().getbLine());
+                }
             } else {
-
+                if (!plot.getPoints().isEmpty() && checkBoxMNKByParabola.isSelected())
+                    messageLbl.setText("");
+                plot.setExecutingMNKByLine(false);
+                repaintDrawingPanel(plot);
             }
         });
 
-        checkBox.setBounds(40, 10, 120, 20);
-        inputPanel.add(checkBox);
+        checkBoxMNKByParabola.addActionListener(e -> {
+            JCheckBox choice = (JCheckBox) e.getSource();
+            if (choice.isSelected()) {
+                if(plot.getPoints().isEmpty())
+                    messageLbl.setText("Укажите точки для исполнения мнк.");
+                else messageLbl.setText("");
+                plot.setExecutingMNKByParabola(true);
+                repaintDrawingPanel(plot);
+            } else {
+                if (!plot.getPoints().isEmpty() && checkBoxMNKByLine.isSelected())
+                    messageLbl.setText("");
+                plot.setExecutingMNKByParabola(false);
+                repaintDrawingPanel(plot);
+            }
+        });
+
+        checkBoxMNKByLine.setVisible(true);
+        checkBoxMNKByParabola.setVisible(true);
+        checkBoxMNKByLine.setBounds(20, 200, 110, 20);
+        inputPanel.add(checkBoxMNKByLine);
+        checkBoxMNKByParabola.setBounds(20, 230, 110, 20);
+        inputPanel.add(checkBoxMNKByParabola);
     }
 
     private JTextField createTextField(int bounds[], String value, JPanel panel) {
@@ -137,6 +182,7 @@ public class Interface {
         drawingPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                System.out.println("+");
                 selectPoint(e);
             }
         });
@@ -145,8 +191,8 @@ public class Interface {
     private void addNewPointAndRepaint(Point point){
         plot.addPoint(point);
         plot.setSelectedPoint(null);
-        drawingPanel.remove(plot);
         plot.setChoice(true);
+        repaintDrawingPanel(plot);
     }
 
     private void selectPoint(MouseEvent e){
@@ -155,7 +201,7 @@ public class Interface {
         Point position = new Point(e.getX() - drawingPanel.getWidth() / 2, drawingPanel.getHeight() / 2 - e.getY());
         for (Point point : plot.getPoints()) {
             double newDistance = plot.getDistance(point, position);
-            if (newDistance < 5 && newDistance < distance) {
+            if (newDistance < 3 && newDistance < distance) {
                 nearestPoint = point;
                 distance = newDistance;
             }

@@ -1,5 +1,3 @@
-import com.sun.org.apache.regexp.internal.RE;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -16,14 +14,28 @@ public class Plot extends JPanel {
     private ArrayList<Line> gridLines;
     private boolean choice;
     private Point selectedPoint;
-    private String typeOfMNK;
+    private boolean executingMNKByLine;
+    private boolean executingMNKByParabola;
+    private MNK_Class mnk_class;
 
-    public String getTypeOfMNK() {
-        return typeOfMNK;
+    public MNK_Class getMnk_class() {
+        return mnk_class;
     }
 
-    public void setTypeOfMNK(String typeOfMNK) {
-        this.typeOfMNK = typeOfMNK;
+    public boolean isExecutingMNKByLine() {
+        return executingMNKByLine;
+    }
+
+    public void setExecutingMNKByLine(boolean executingMNKByLine) {
+        this.executingMNKByLine = executingMNKByLine;
+    }
+
+    public boolean isExecutingMNKByParabola() {
+        return executingMNKByParabola;
+    }
+
+    public void setExecutingMNKByParabola(boolean executingMNKByParabola) {
+        this.executingMNKByParabola = executingMNKByParabola;
     }
 
     public Point getSelectedPoint() {
@@ -100,6 +112,9 @@ public class Plot extends JPanel {
         drawAxis();
         if (choice) zoom();
         else designateCoordinateAxes();
+        if (executingMNKByLine || executingMNKByParabola){
+            drawPlotUsingOrdinaryLeastSquares();
+        }
         if (!points.isEmpty())
             drawVertexes(points);
     }
@@ -180,9 +195,13 @@ public class Plot extends JPanel {
                 if (!axisLines.contains(new Line(point1, point2, typeOfLine)))
                     axisLines.add(new Line(point1, point2, typeOfLine));
                 break;
-            case CURVELine:
+            case LINE:
                 graphics.setStroke(new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
-                graphics.setColor(new Color(0f, 0f, 0f, 1f));
+                graphics.setColor(Color.RED);
+                break;
+            case PARABOLA:
+                graphics.setStroke(new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
+                graphics.setColor(Color.GREEN);
                 break;
             case DIMENSIONLine:
                 graphics.setColor(new Color(0f, 0f, 1f, 1f));
@@ -204,7 +223,6 @@ public class Plot extends JPanel {
         for (Point point: points){
             point.setX(rescaleX.rescale(point.getX()));
             point.setY(rescaleY.rescale(point.getY()));
-            System.out.println("result: " + point.getX() + "," + point.getY());
         }
 //        for (double sign = (int) minY, h = - getHeight() / 2; sign <= maxY && h < getHeight() / 2; sign += rescaleY.rescale(unitVectorSizeY), h += unitVectorSizeY){
 //            graphics.drawString("" + (int) sign, 4, (int) - h);
@@ -318,5 +336,30 @@ public class Plot extends JPanel {
 
     public void removeSelectedPoint(){
         points.remove(selectedPoint);
+    }
+
+    private void drawPlotUsingOrdinaryLeastSquares(){
+        ArrayList<Double> listX = new ArrayList<>();
+        ArrayList<Double> listY = new ArrayList<>();
+        for (Point point: points){
+            listX.add(point.getX());
+            listY.add(point.getY());
+        }
+        mnk_class = new MNK_Class(listX, listY);
+        ArrayList<Point> pointsUsingOrdinaryLeastSquaresByLine = mnk_class.calculatePointsUsingOrdinaryLeastSquaresByLine();
+        ArrayList<Point> pointsUsingOrdinaryLeastSquaresByParabola = mnk_class.calculatePointsUsingOrdinaryLeastSquaresByParabola();
+        System.out.println("a: " + mnk_class.getaLine() + ", b: " + mnk_class.getbLine());
+        if(executingMNKByLine){
+            drawPlot(pointsUsingOrdinaryLeastSquaresByLine, TypeOfLine.LINE);
+        }
+        if(executingMNKByParabola){
+            drawPlot(pointsUsingOrdinaryLeastSquaresByParabola, TypeOfLine.PARABOLA);
+        }
+    }
+
+    private void drawPlot(ArrayList<Point> points, TypeOfLine typeOfLine){
+        for (int i = 0; i < points.size() - 1; i++) {
+            drawLine(points.get(i), points.get(i + 1), typeOfLine);
+        }
     }
 }
