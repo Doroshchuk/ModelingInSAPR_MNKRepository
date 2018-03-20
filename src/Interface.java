@@ -55,38 +55,38 @@ public class Interface {
 
         JLabel messageLbl = createLabel("", new int[]{28, 150, 200, 40}, inputPanel);
 
-        JButton addNewPointBtn = createButton(new int[]{40, 110, 40, 40}, "Images/executing.png", inputPanel, (ActionEvent event) -> {
+        JButton addNewPointBtn = createButton(new int[]{40, 110, 40, 40}, "Images/add.png", inputPanel, (ActionEvent event) -> {
             double x = Double.parseDouble(coordinateOfXTF.getText());
             double y = Double.parseDouble(coordinateOfYTF.getText());
 
             Point newPoint = new Point(x, y);
             if(plot.getPoints().contains(newPoint)) {
                 repaintSelectedPoint(newPoint);
-            } else addNewPointAndRepaint(newPoint);
-            checkBoxMNKByLine.setSelected(false);
-            checkBoxMNKByParabola.setSelected(false);
+            } else {
+                addNewPointAndRepaint(newPoint);
+            }
         });
 
-        JButton removeSelectedPointBtn = createButton(new int[]{100, 110, 40, 40}, "Images/executing.png", inputPanel, (ActionEvent event) -> {
+        JButton removeSelectedPointBtn = createButton(new int[]{100, 110, 40, 40}, "Images/delete.png", inputPanel, (ActionEvent event) -> {
             if(!(plot.getSelectedPoint() == null)){
                 drawingPanel.remove(plot);
                 plot.removeSelectedPoint();
+                checkBoxMNKByLine.setSelected(false);
+                checkBoxMNKByParabola.setSelected(false);
                 repaintDrawingPanel(plot);
             } else {
                 String messageText = "Вы не выбрали точку для удаления.";
                 messageLbl.setText("<html><div style='text-align: center;'>" + messageText + "</div></html>");
             }
-            checkBoxMNKByLine.setSelected(false);
-            checkBoxMNKByParabola.setSelected(false);
         });
 
-        JButton removeAllPointsBtn = createButton(new int[]{160, 110, 40, 40}, "Images/executing.png", inputPanel, (ActionEvent event) -> {
+        JButton removeAllPointsBtn = createButton(new int[]{160, 110, 40, 40}, "Images/clear.png", inputPanel, (ActionEvent event) -> {
             drawingPanel.remove(plot);
             plot.getPoints().clear();
             plot.setChoice(false);
-            repaintDrawingPanel(plot);
             checkBoxMNKByLine.setSelected(false);
             checkBoxMNKByParabola.setSelected(false);
+            repaintDrawingPanel(plot);
         });
 
         checkBoxMNKByLine = new JCheckBox();
@@ -95,23 +95,28 @@ public class Interface {
         checkBoxMNKByParabola = new JCheckBox();
         checkBoxMNKByParabola.setText("MNK by Parabola");
 
-        JLabel lblForCoefMNKByLine = createLabel("", new int[]{130, 200, 60, 40}, inputPanel);
+        JLabel lblForCoefMNKByLine = createLabel("", new int[]{10, 220, 160, 20}, inputPanel);
+        JLabel lblForCoefMNKByParabola = createLabel("", new int[]{10, 260, 170, 20}, inputPanel);
         lblForCoefMNKByLine.setVisible(false);
+        lblForCoefMNKByParabola.setVisible(false);
         checkBoxMNKByLine.addActionListener(e -> {
             JCheckBox choice = (JCheckBox) e.getSource();
             if (choice.isSelected()) {
                 if(plot.getPoints().isEmpty())
-                    messageLbl.setText("Укажите точки для исполнения мнк.");
+                    messageLbl.setText("Укажите точки для построения мнк.");
                 else {
+                    MNK_Class mnk_class = new MNK_Class(plot.getPoints());
+                    setUpUsingOrdinaryLeastSquares(mnk_class);
                     plot.setExecutingMNKByLine(true);
-                    repaintDrawingPanel(plot);
                     messageLbl.setText("");
                     lblForCoefMNKByLine.setVisible(true);
-                    lblForCoefMNKByLine.setText("a: " + plot.getMnk_class().getaLine() + ", b: " + plot.getMnk_class().getbLine());
+                    lblForCoefMNKByLine.setText("a: " + String.format("%.4f", mnk_class.getaLine()) + ", b: " + String.format("%.4f", mnk_class.getbLine()));
+                    repaintDrawingPanel(plot);
                 }
             } else {
                 if (!plot.getPoints().isEmpty() && checkBoxMNKByParabola.isSelected())
                     messageLbl.setText("");
+                lblForCoefMNKByLine.setVisible(false);
                 plot.setExecutingMNKByLine(false);
                 repaintDrawingPanel(plot);
             }
@@ -122,12 +127,19 @@ public class Interface {
             if (choice.isSelected()) {
                 if(plot.getPoints().isEmpty())
                     messageLbl.setText("Укажите точки для исполнения мнк.");
-                else messageLbl.setText("");
-                plot.setExecutingMNKByParabola(true);
-                repaintDrawingPanel(plot);
+                else {
+                    MNK_Class mnk_class = new MNK_Class(plot.getPoints());
+                    setUpUsingOrdinaryLeastSquares(mnk_class);
+                    plot.setExecutingMNKByParabola(true);
+                    messageLbl.setText("");
+                    lblForCoefMNKByParabola.setVisible(true);
+                    lblForCoefMNKByParabola.setText("a: " + String.format("%.4f", mnk_class.getaParabola()) + ", b: " + String.format("%.4f", mnk_class.getbParabola()) + ", c: " + String.format("%.4f", mnk_class.getcParabola()));
+                    repaintDrawingPanel(plot);
+                }
             } else {
                 if (!plot.getPoints().isEmpty() && checkBoxMNKByLine.isSelected())
                     messageLbl.setText("");
+                lblForCoefMNKByParabola.setVisible(false);
                 plot.setExecutingMNKByParabola(false);
                 repaintDrawingPanel(plot);
             }
@@ -135,10 +147,47 @@ public class Interface {
 
         checkBoxMNKByLine.setVisible(true);
         checkBoxMNKByParabola.setVisible(true);
-        checkBoxMNKByLine.setBounds(20, 200, 110, 20);
+        checkBoxMNKByLine.setBounds(10, 200, 90, 20);
         inputPanel.add(checkBoxMNKByLine);
-        checkBoxMNKByParabola.setBounds(20, 230, 110, 20);
+        checkBoxMNKByParabola.setBounds(10, 240, 110, 20);
         inputPanel.add(checkBoxMNKByParabola);
+        setUpInterfaceOfcalculatingY(messageLbl);
+    }
+
+    private void setUpInterfaceOfcalculatingY(JLabel messageLbl){
+        JLabel lblForDescription = createLabel("<html><div style='text-align: center;'>Введите x для подсчёта у:</div></html>", new int[]{10, 280, 300, 20}, inputPanel);
+        createLabel("x = : ", new int[]{20, 312, 30, 20}, inputPanel);
+        JTextField coordinateOfXTF = createTextField(new int[]{50, 312, 60, 20}, "", inputPanel);
+        JButton calculateYUsingMNKByLineBtn = createButton(new int[]{150, 300, 40, 40}, "Images/delete.png", inputPanel, (ActionEvent event) -> {
+            double x = Double.parseDouble(coordinateOfXTF.getText());
+            MNK_Class mnk_class = new MNK_Class(plot.getPoints());
+            setUpUsingOrdinaryLeastSquares(mnk_class);
+            JLabel yByLine = createLabel("", new int[]{20, 340, 150, 20}, inputPanel);
+            JLabel yByParabola = createLabel("", new int[]{20, 360, 150, 20}, inputPanel);
+            if (checkBoxMNKByLine.isSelected() && checkBoxMNKByParabola.isSelected()){
+                yByLine.setText("(by line) y = " + String.format("%.4f", -mnk_class.calculateYUsingOrdinaryLeastSquaresByLine(x)));
+                yByParabola.setText("(by parabola) y = " + String.format("%.4f", -mnk_class.calculateYUsingOrdinaryLeastSquaresByParabola(x)));
+                yByLine.setVisible(true);
+                yByParabola.setVisible(true);
+            } else if (checkBoxMNKByLine.isSelected() && (!checkBoxMNKByParabola.isSelected())){
+                yByLine.setText("(by line) y = " + String.format("%.4f", -mnk_class.calculateYUsingOrdinaryLeastSquaresByLine(x)));
+                yByLine.setVisible(true);
+                yByParabola.setVisible(false);
+            } else if ((!checkBoxMNKByLine.isSelected()) && checkBoxMNKByParabola.isSelected()){
+                yByParabola.setText("(by parabola) y = " + String.format("%.4f", -mnk_class.calculateYUsingOrdinaryLeastSquaresByParabola(x)));
+                yByParabola.setVisible(true);
+                yByParabola.setVisible(false);
+            } else if ((!checkBoxMNKByLine.isSelected()) && (!checkBoxMNKByParabola.isSelected())){
+                messageLbl.setText("Выберите порядок мнк.");
+            }
+        });
+
+        drawingPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                selectPoint(e);
+            }
+        });
     }
 
     private JTextField createTextField(int bounds[], String value, JPanel panel) {
@@ -178,17 +227,11 @@ public class Interface {
         inputPanel.setVisible(true);
         inputPanel.setLayout(null);
         drawingPanel.setVisible(true);
-
-        drawingPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("+");
-                selectPoint(e);
-            }
-        });
     }
 
     private void addNewPointAndRepaint(Point point){
+        checkBoxMNKByLine.setSelected(false);
+        checkBoxMNKByParabola.setSelected(false);
         plot.addPoint(point);
         plot.setSelectedPoint(null);
         plot.setChoice(true);
@@ -212,6 +255,12 @@ public class Interface {
     }
 
     private void repaintSelectedPoint(Point selectedPoint){
+        if (checkBoxMNKByLine.isSelected()){
+            plot.setExecutingMNKByLine(true);
+        }
+        if (checkBoxMNKByParabola.isSelected()){
+            plot.setExecutingMNKByParabola(true);
+        }
         drawingPanel.remove(plot);
         plot.setSelectedPoint(selectedPoint);
         repaintDrawingPanel(plot);
@@ -221,5 +270,10 @@ public class Interface {
         drawingPanel.add(plot);
         drawingPanel.validate();
         drawingPanel.repaint();
+    }
+
+    private void setUpUsingOrdinaryLeastSquares(MNK_Class mnk_class){
+        plot.setPointsUsingOrdinaryLeastSquaresByLine(mnk_class.calculatePointsUsingOrdinaryLeastSquaresByLine());
+        plot.setPointsUsingOrdinaryLeastSquaresByParabola(mnk_class.calculatePointsUsingOrdinaryLeastSquaresByParabola());
     }
 }

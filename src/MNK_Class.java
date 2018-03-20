@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class MNK_Class {
+    private ArrayList<Point> points;
     private ArrayList<Double> listX;
     private ArrayList<Double> listY;
     private double aLine;
@@ -9,8 +10,37 @@ public class MNK_Class {
     private double bParabola;
     private double cParabola;
 
-    public MNK_Class(ArrayList<Double> listX, ArrayList<Double> listY){
+    public MNK_Class(ArrayList<Point> points){
+        this.points = points;
+        this.listX = new ArrayList<>();
+        this.listY = new ArrayList<>();
+        for (Point point: points){
+            listX.add(point.getX());
+            listY.add(point.getY());
+        }
+    }
+
+    public ArrayList<Point> getPoints() {
+        return points;
+    }
+
+    public void setPoints(ArrayList<Point> points) {
+        this.points = points;
+    }
+
+    public ArrayList<Double> getListX() {
+        return listX;
+    }
+
+    public ArrayList<Double> getListY() {
+        return listY;
+    }
+
+    public void setListX(ArrayList<Double> listX) {
         this.listX = listX;
+    }
+
+    public void setListY(ArrayList<Double> listY) {
         this.listY = listY;
     }
 
@@ -66,8 +96,7 @@ public class MNK_Class {
         aLine = calculateCoefficient(mainDeterminant, new Matrix(sumOfListY, n, sumOfMultipliedListXListY, sumOfListX));
         bLine = calculateCoefficient(mainDeterminant, new Matrix(sumOfListX, sumOfListY, sumOfSquaredListX, sumOfMultipliedListXListY));
         for (int x = -500; x <= 500; x += 1){
-            double y = aLine * x + bLine;
-            points.add(new Point(x, y));
+            points.add(new Point(x, calculateYUsingOrdinaryLeastSquaresByLine(x)));
         }
         return points;
     }
@@ -91,10 +120,17 @@ public class MNK_Class {
         Matrix matrixC = new Matrix(sumOfSquaredListX, sumOfListX, sumOfListY, sumOfCubedListX, sumOfSquaredListX, sumOfMultipliedListXListY, sumOfListXInFourthDegree, sumOfCubedListX, sumOfMultipliedSquaredListXListY);
         cParabola = calculateCoefficient(mainDeterminant, matrixC);
         for (int x = -500; x <= 500; x += 1){
-            double y = aParabola * Math.pow(x, 2) + bParabola * x + cParabola;
-            points.add(new Point(x, y));
+            points.add(new Point(x, calculateYUsingOrdinaryLeastSquaresByParabola(x)));
         }
         return points;
+    }
+
+    public double calculateYUsingOrdinaryLeastSquaresByLine(double x){
+        return aLine * x + bLine;
+    }
+
+    public double calculateYUsingOrdinaryLeastSquaresByParabola(double x){
+        return aParabola * Math.pow(x, 2) + bParabola * x + cParabola;
     }
 
     private double calculateCoefficient(double mainDeterminant, Matrix coefMatrix){

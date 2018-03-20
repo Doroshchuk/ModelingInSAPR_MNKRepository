@@ -2,11 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="75a8a8ec-4337-473b-a1ef-72f6e77de1ab" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Images/affin_transformation.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Images/executing.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Images/moving.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Images/proective_transformation.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Images/rotating.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Images/zoomIn.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Images/zoomOut.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Interface.java" afterPath="$PROJECT_DIR$/src/Interface.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MNK_Class.java" afterPath="$PROJECT_DIR$/src/MNK_Class.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Plot.java" afterPath="$PROJECT_DIR$/src/Plot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TypeOfLine.java" afterPath="$PROJECT_DIR$/src/TypeOfLine.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,13 +35,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Interface.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Interface.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Interface.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="106" column="46" lean-forward="false" selection-start-line="106" selection-start-column="46" selection-end-line="106" selection-end-column="46" />
+            <state relative-caret-position="193">
+              <caret line="262" column="9" lean-forward="false" selection-start-line="262" selection-start-column="9" selection-end-line="262" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#9113#9264#0" expanded="true" />
+                <element signature="e#9263#9264#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -44,7 +52,7 @@
       <file leaf-file-name="Rescale.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Rescale.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
+            <state relative-caret-position="281">
               <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
               <folding>
                 <element signature="e#1044#1045#0" expanded="true" />
@@ -56,10 +64,13 @@
       <file leaf-file-name="Point.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Point.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="68">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding>
+                <element signature="e#176#177#0" expanded="true" />
                 <element signature="e#200#201#0" expanded="true" />
+                <element signature="e#288#289#0" expanded="true" />
+                <element signature="e#312#313#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -78,9 +89,15 @@
       <file leaf-file-name="MNK_Class.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MNK_Class.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="152">
+              <caret line="128" column="0" lean-forward="false" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+              <folding>
+                <element signature="e#1098#1099#0" expanded="true" />
+                <element signature="e#1126#1127#0" expanded="true" />
+                <element signature="e#1234#1235#0" expanded="true" />
+                <element signature="e#1262#1263#0" expanded="true" />
+                <element signature="e#4970#4971#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -88,7 +105,7 @@
       <file leaf-file-name="Matrix.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Matrix.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
+            <state relative-caret-position="272">
               <caret line="18" column="29" lean-forward="false" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
               <folding>
                 <element signature="e#122#123#0" expanded="true" />
@@ -98,18 +115,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Plot.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Plot.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Plot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4335">
-              <caret line="349" column="39" lean-forward="false" selection-start-line="349" selection-start-column="39" selection-end-line="349" selection-end-column="39" />
+            <state relative-caret-position="347">
+              <caret line="203" column="29" lean-forward="true" selection-start-line="203" selection-start-column="29" selection-end-line="203" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#setPointsUsingOrdinaryLeastSquaresByLine#0;class#Plot#0" expanded="false" />
+                <element signature="method#getPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
+                <element signature="method#setPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
                 <element signature="method#setExecutingMNKByParabola#0;class#Plot#0" expanded="false" />
-                <element signature="e#2273#2274#0" expanded="true" />
-                <element signature="e#2320#2321#0" expanded="true" />
-                <element signature="e#8114#8280#0" expanded="false" />
-                <element signature="e#8582#8584#0" expanded="false" />
+                <element signature="e#2082#2083#0" expanded="true" />
+                <element signature="e#2111#2112#0" expanded="true" />
+                <element signature="e#3029#3030#0" expanded="true" />
+                <element signature="e#3076#3077#0" expanded="true" />
+                <element signature="e#9137#9303#0" expanded="false" />
+                <element signature="e#9605#9607#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -138,6 +160,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>result</find>
+      <find>&quot;+&quot;</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -159,8 +182,8 @@
         <option value="$PROJECT_DIR$/src/Rescale.java" />
         <option value="$PROJECT_DIR$/src/TypeOfLine.java" />
         <option value="$PROJECT_DIR$/src/MNK_Class.java" />
-        <option value="$PROJECT_DIR$/src/Plot.java" />
         <option value="$PROJECT_DIR$/src/Interface.java" />
+        <option value="$PROJECT_DIR$/src/Plot.java" />
       </list>
     </option>
   </component>
@@ -197,10 +220,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -217,6 +236,10 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -357,7 +380,8 @@
       <workItem from="1521413635726" duration="3180000" />
       <workItem from="1521446786628" duration="8184000" />
       <workItem from="1521475008559" duration="12135000" />
-      <workItem from="1521494977637" duration="10000" />
+      <workItem from="1521494977637" duration="211000" />
+      <workItem from="1521540330156" duration="11889000" />
     </task>
     <task id="LOCAL-00001" summary="two classes MNK_Class, Matrix are added to project.">
       <created>1521302208527</created>
@@ -380,11 +404,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521454624549</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="the possibility to describe the results of MNK is added, code is more optimizated">
+      <created>1521495159979</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1521495159980</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79249000" />
+    <option name="totallyTimeSpent" value="91339000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -392,17 +423,18 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18821605" sideWeight="0.50907713" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29459903" sideWeight="0.49092284" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29459903" sideWeight="0.49092284" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2473525" sideWeight="0.4942717" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25113463" sideWeight="0.4942717" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -414,7 +446,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -461,11 +492,12 @@
     <MESSAGE value="two classes Interface, Plot are modified: method for adding point using MouseListener is created." />
     <MESSAGE value="two classes Interface, Plot are modified: &#10;1.partially scaled, &#10;2.the possibility to set points from the keyboard, and with the mouse, &#10;3.the possibility to adjust points (add, delete), &#10;4.the possibility to clear the screen." />
     <MESSAGE value="two classes Interface, Plot are modified, class Rescale is added: &#10;1.partially scaled, &#10;2.the possibility to set points from the keyboard, and with the mouse, &#10;3.the possibility to adjust points (add, delete), &#10;4.the possibility to clear the screen." />
-    <option name="LAST_COMMIT_MESSAGE" value="two classes Interface, Plot are modified, class Rescale is added: &#10;1.partially scaled, &#10;2.the possibility to set points from the keyboard, and with the mouse, &#10;3.the possibility to adjust points (add, delete), &#10;4.the possibility to clear the screen." />
+    <MESSAGE value="the possibility to describe the results of MNK is added, code is more optimizated" />
+    <option name="LAST_COMMIT_MESSAGE" value="the possibility to describe the results of MNK is added, code is more optimizated" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="37" />
+      <option name="time" value="49" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -476,6 +508,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9113#9264#0" expanded="true" />
+            <element signature="e#9263#9264#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -495,7 +529,10 @@
         <state relative-caret-position="170">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding>
+            <element signature="e#176#177#0" expanded="true" />
             <element signature="e#200#201#0" expanded="true" />
+            <element signature="e#288#289#0" expanded="true" />
+            <element signature="e#312#313#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -512,7 +549,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
           <caret line="51" column="0" lean-forward="true" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1098#1099#0" expanded="true" />
+            <element signature="e#1126#1127#0" expanded="true" />
+            <element signature="e#1234#1235#0" expanded="true" />
+            <element signature="e#1262#1263#0" expanded="true" />
+            <element signature="e#4970#4971#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -533,11 +576,16 @@
           <caret line="349" column="39" lean-forward="true" selection-start-line="349" selection-start-column="39" selection-end-line="349" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByLine#0;class#Plot#0" expanded="false" />
+            <element signature="method#getPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
             <element signature="method#setExecutingMNKByParabola#0;class#Plot#0" expanded="false" />
-            <element signature="e#2273#2274#0" expanded="true" />
-            <element signature="e#2320#2321#0" expanded="true" />
-            <element signature="e#8114#8280#0" expanded="false" />
-            <element signature="e#8582#8584#0" expanded="false" />
+            <element signature="e#2082#2083#0" expanded="true" />
+            <element signature="e#2111#2112#0" expanded="true" />
+            <element signature="e#3029#3030#0" expanded="true" />
+            <element signature="e#3076#3077#0" expanded="true" />
+            <element signature="e#9137#9303#0" expanded="false" />
+            <element signature="e#9605#9607#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -556,6 +604,8 @@
           <caret line="84" column="41" lean-forward="false" selection-start-line="84" selection-start-column="41" selection-end-line="84" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9113#9264#0" expanded="true" />
+            <element signature="e#9263#9264#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -575,7 +625,10 @@
         <state relative-caret-position="357">
           <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding>
+            <element signature="e#176#177#0" expanded="true" />
             <element signature="e#200#201#0" expanded="true" />
+            <element signature="e#288#289#0" expanded="true" />
+            <element signature="e#312#313#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -592,7 +645,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-          <folding />
+          <folding>
+            <element signature="e#1098#1099#0" expanded="true" />
+            <element signature="e#1126#1127#0" expanded="true" />
+            <element signature="e#1234#1235#0" expanded="true" />
+            <element signature="e#1262#1263#0" expanded="true" />
+            <element signature="e#4970#4971#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -613,11 +672,16 @@
           <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByLine#0;class#Plot#0" expanded="false" />
+            <element signature="method#getPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
             <element signature="method#setExecutingMNKByParabola#0;class#Plot#0" expanded="false" />
-            <element signature="e#2273#2274#0" expanded="true" />
-            <element signature="e#2320#2321#0" expanded="true" />
-            <element signature="e#8114#8280#0" expanded="false" />
-            <element signature="e#8582#8584#0" expanded="false" />
+            <element signature="e#2082#2083#0" expanded="true" />
+            <element signature="e#2111#2112#0" expanded="true" />
+            <element signature="e#3029#3030#0" expanded="true" />
+            <element signature="e#3076#3077#0" expanded="true" />
+            <element signature="e#9137#9303#0" expanded="false" />
+            <element signature="e#9605#9607#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -628,6 +692,8 @@
           <caret line="117" column="33" lean-forward="true" selection-start-line="117" selection-start-column="33" selection-end-line="117" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9113#9264#0" expanded="true" />
+            <element signature="e#9263#9264#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -647,7 +713,10 @@
         <state relative-caret-position="238">
           <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
+            <element signature="e#176#177#0" expanded="true" />
             <element signature="e#200#201#0" expanded="true" />
+            <element signature="e#288#289#0" expanded="true" />
+            <element signature="e#312#313#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -664,7 +733,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-          <folding />
+          <folding>
+            <element signature="e#1098#1099#0" expanded="true" />
+            <element signature="e#1126#1127#0" expanded="true" />
+            <element signature="e#1234#1235#0" expanded="true" />
+            <element signature="e#1262#1263#0" expanded="true" />
+            <element signature="e#4970#4971#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -685,11 +760,16 @@
           <caret line="188" column="71" lean-forward="false" selection-start-line="188" selection-start-column="71" selection-end-line="188" selection-end-column="71" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByLine#0;class#Plot#0" expanded="false" />
+            <element signature="method#getPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
             <element signature="method#setExecutingMNKByParabola#0;class#Plot#0" expanded="false" />
-            <element signature="e#2273#2274#0" expanded="true" />
-            <element signature="e#2320#2321#0" expanded="true" />
-            <element signature="e#8114#8280#0" expanded="false" />
-            <element signature="e#8582#8584#0" expanded="false" />
+            <element signature="e#2082#2083#0" expanded="true" />
+            <element signature="e#2111#2112#0" expanded="true" />
+            <element signature="e#3029#3030#0" expanded="true" />
+            <element signature="e#3076#3077#0" expanded="true" />
+            <element signature="e#9137#9303#0" expanded="false" />
+            <element signature="e#9605#9607#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -700,6 +780,8 @@
           <caret line="118" column="57" lean-forward="true" selection-start-line="118" selection-start-column="57" selection-end-line="118" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9113#9264#0" expanded="true" />
+            <element signature="e#9263#9264#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -719,7 +801,10 @@
         <state relative-caret-position="238">
           <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
+            <element signature="e#176#177#0" expanded="true" />
             <element signature="e#200#201#0" expanded="true" />
+            <element signature="e#288#289#0" expanded="true" />
+            <element signature="e#312#313#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -736,7 +821,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-          <folding />
+          <folding>
+            <element signature="e#1098#1099#0" expanded="true" />
+            <element signature="e#1126#1127#0" expanded="true" />
+            <element signature="e#1234#1235#0" expanded="true" />
+            <element signature="e#1262#1263#0" expanded="true" />
+            <element signature="e#4970#4971#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -757,11 +848,16 @@
           <caret line="176" column="22" lean-forward="false" selection-start-line="176" selection-start-column="22" selection-end-line="176" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByLine#0;class#Plot#0" expanded="false" />
+            <element signature="method#getPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
             <element signature="method#setExecutingMNKByParabola#0;class#Plot#0" expanded="false" />
-            <element signature="e#2273#2274#0" expanded="true" />
-            <element signature="e#2320#2321#0" expanded="true" />
-            <element signature="e#8114#8280#0" expanded="false" />
-            <element signature="e#8582#8584#0" expanded="false" />
+            <element signature="e#2082#2083#0" expanded="true" />
+            <element signature="e#2111#2112#0" expanded="true" />
+            <element signature="e#3029#3030#0" expanded="true" />
+            <element signature="e#3076#3077#0" expanded="true" />
+            <element signature="e#9137#9303#0" expanded="false" />
+            <element signature="e#9605#9607#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -772,6 +868,8 @@
           <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9113#9264#0" expanded="true" />
+            <element signature="e#9263#9264#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -781,7 +879,10 @@
         <state relative-caret-position="306">
           <caret line="26" column="42" lean-forward="false" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
           <folding>
+            <element signature="e#176#177#0" expanded="true" />
             <element signature="e#200#201#0" expanded="true" />
+            <element signature="e#288#289#0" expanded="true" />
+            <element signature="e#312#313#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -805,7 +906,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-          <folding />
+          <folding>
+            <element signature="e#1098#1099#0" expanded="true" />
+            <element signature="e#1126#1127#0" expanded="true" />
+            <element signature="e#1234#1235#0" expanded="true" />
+            <element signature="e#1262#1263#0" expanded="true" />
+            <element signature="e#4970#4971#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -826,11 +933,16 @@
           <caret line="9" column="22" lean-forward="true" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByLine#0;class#Plot#0" expanded="false" />
+            <element signature="method#getPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
             <element signature="method#setExecutingMNKByParabola#0;class#Plot#0" expanded="false" />
-            <element signature="e#2273#2274#0" expanded="true" />
-            <element signature="e#2320#2321#0" expanded="true" />
-            <element signature="e#8114#8280#0" expanded="false" />
-            <element signature="e#8582#8584#0" expanded="false" />
+            <element signature="e#2082#2083#0" expanded="true" />
+            <element signature="e#2111#2112#0" expanded="true" />
+            <element signature="e#3029#3030#0" expanded="true" />
+            <element signature="e#3076#3077#0" expanded="true" />
+            <element signature="e#9137#9303#0" expanded="false" />
+            <element signature="e#9605#9607#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -841,6 +953,8 @@
           <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9113#9264#0" expanded="true" />
+            <element signature="e#9263#9264#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -850,7 +964,10 @@
         <state relative-caret-position="306">
           <caret line="26" column="42" lean-forward="true" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
           <folding>
+            <element signature="e#176#177#0" expanded="true" />
             <element signature="e#200#201#0" expanded="true" />
+            <element signature="e#288#289#0" expanded="true" />
+            <element signature="e#312#313#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -876,21 +993,29 @@
           <caret line="28" column="15" lean-forward="true" selection-start-line="28" selection-start-column="15" selection-end-line="28" selection-end-column="15" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByLine#0;class#Plot#0" expanded="false" />
+            <element signature="method#getPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
             <element signature="method#setExecutingMNKByParabola#0;class#Plot#0" expanded="false" />
-            <element signature="e#2273#2274#0" expanded="true" />
-            <element signature="e#2320#2321#0" expanded="true" />
-            <element signature="e#8114#8280#0" expanded="false" />
-            <element signature="e#8582#8584#0" expanded="false" />
+            <element signature="e#2082#2083#0" expanded="true" />
+            <element signature="e#2111#2112#0" expanded="true" />
+            <element signature="e#3029#3030#0" expanded="true" />
+            <element signature="e#3076#3077#0" expanded="true" />
+            <element signature="e#9137#9303#0" expanded="false" />
+            <element signature="e#9605#9607#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Coefficient.java" />
-    <entry file="file://$PROJECT_DIR$/src/Line.java">
+    <entry file="file://$PROJECT_DIR$/src/Matrix.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="43" column="9" lean-forward="false" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="9" />
-          <folding />
+        <state relative-caret-position="272">
+          <caret line="18" column="29" lean-forward="false" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+          <folding>
+            <element signature="e#122#123#0" expanded="true" />
+            <element signature="e#158#159#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -902,38 +1027,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Point.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#200#201#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Matrix.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="29" lean-forward="false" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
-          <folding>
-            <element signature="e#122#123#0" expanded="true" />
-            <element signature="e#158#159#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MNK_Class.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Rescale.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
+        <state relative-caret-position="281">
           <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding>
             <element signature="e#1044#1045#0" expanded="true" />
@@ -941,27 +1037,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Plot.java">
+    <entry file="file://$PROJECT_DIR$/src/Line.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4335">
-          <caret line="349" column="39" lean-forward="false" selection-start-line="349" selection-start-column="39" selection-end-line="349" selection-end-column="39" />
+        <state relative-caret-position="527">
+          <caret line="43" column="9" lean-forward="false" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Images/delete.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Point.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#setExecutingMNKByParabola#0;class#Plot#0" expanded="false" />
-            <element signature="e#2273#2274#0" expanded="true" />
-            <element signature="e#2320#2321#0" expanded="true" />
-            <element signature="e#8114#8280#0" expanded="false" />
-            <element signature="e#8582#8584#0" expanded="false" />
+            <element signature="e#176#177#0" expanded="true" />
+            <element signature="e#200#201#0" expanded="true" />
+            <element signature="e#288#289#0" expanded="true" />
+            <element signature="e#312#313#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MNK_Class.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="128" column="0" lean-forward="false" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+          <folding>
+            <element signature="e#1098#1099#0" expanded="true" />
+            <element signature="e#1126#1127#0" expanded="true" />
+            <element signature="e#1234#1235#0" expanded="true" />
+            <element signature="e#1262#1263#0" expanded="true" />
+            <element signature="e#4970#4971#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Interface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="106" column="46" lean-forward="false" selection-start-line="106" selection-start-column="46" selection-end-line="106" selection-end-column="46" />
+        <state relative-caret-position="193">
+          <caret line="262" column="9" lean-forward="false" selection-start-line="262" selection-start-column="9" selection-end-line="262" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9113#9264#0" expanded="true" />
+            <element signature="e#9263#9264#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Plot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="203" column="29" lean-forward="true" selection-start-line="203" selection-start-column="29" selection-end-line="203" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByLine#0;class#Plot#0" expanded="false" />
+            <element signature="method#getPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
+            <element signature="method#setPointsUsingOrdinaryLeastSquaresByParabola#0;class#Plot#0" expanded="false" />
+            <element signature="method#setExecutingMNKByParabola#0;class#Plot#0" expanded="false" />
+            <element signature="e#2082#2083#0" expanded="true" />
+            <element signature="e#2111#2112#0" expanded="true" />
+            <element signature="e#3029#3030#0" expanded="true" />
+            <element signature="e#3076#3077#0" expanded="true" />
+            <element signature="e#9137#9303#0" expanded="false" />
+            <element signature="e#9605#9607#0" expanded="false" />
           </folding>
         </state>
       </provider>

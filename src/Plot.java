@@ -16,10 +16,23 @@ public class Plot extends JPanel {
     private Point selectedPoint;
     private boolean executingMNKByLine;
     private boolean executingMNKByParabola;
-    private MNK_Class mnk_class;
+    private ArrayList<Point> pointsUsingOrdinaryLeastSquaresByLine;
+    private ArrayList<Point> pointsUsingOrdinaryLeastSquaresByParabola;
 
-    public MNK_Class getMnk_class() {
-        return mnk_class;
+    public ArrayList<Point> getPointsUsingOrdinaryLeastSquaresByLine() {
+        return pointsUsingOrdinaryLeastSquaresByLine;
+    }
+
+    public void setPointsUsingOrdinaryLeastSquaresByLine(ArrayList<Point> pointsUsingOrdinaryLeastSquaresByLine) {
+        this.pointsUsingOrdinaryLeastSquaresByLine = pointsUsingOrdinaryLeastSquaresByLine;
+    }
+
+    public ArrayList<Point> getPointsUsingOrdinaryLeastSquaresByParabola() {
+        return pointsUsingOrdinaryLeastSquaresByParabola;
+    }
+
+    public void setPointsUsingOrdinaryLeastSquaresByParabola(ArrayList<Point> pointsUsingOrdinaryLeastSquaresByParabola) {
+        this.pointsUsingOrdinaryLeastSquaresByParabola = pointsUsingOrdinaryLeastSquaresByParabola;
     }
 
     public boolean isExecutingMNKByLine() {
@@ -112,8 +125,13 @@ public class Plot extends JPanel {
         drawAxis();
         if (choice) zoom();
         else designateCoordinateAxes();
-        if (executingMNKByLine || executingMNKByParabola){
-            drawPlotUsingOrdinaryLeastSquares();
+        if(executingMNKByLine){
+            drawPlot(pointsUsingOrdinaryLeastSquaresByLine, TypeOfLine.LINE);
+            executingMNKByLine = false;
+        }
+        if(executingMNKByParabola){
+            drawPlot(pointsUsingOrdinaryLeastSquaresByParabola, TypeOfLine.PARABOLA);
+            executingMNKByParabola = false;
         }
         if (!points.isEmpty())
             drawVertexes(points);
@@ -175,6 +193,7 @@ public class Plot extends JPanel {
         for (Point point : points) {
             if (point.equals(selectedPoint))
                 graphics.setColor(Color.RED);
+            else graphics.setColor(Color.BLACK);
             graphics.fillOval((int) (x0 + point.getX() - size / 2), (int) (y0 - point.getY() - size / 2), size, size);
             graphics.setColor(Color.BLACK);
             graphics.drawString(Integer.toString(points.indexOf(point)), (int) (x0 + point.getX() + size), (int) (y0 - point.getY()));
@@ -338,26 +357,7 @@ public class Plot extends JPanel {
         points.remove(selectedPoint);
     }
 
-    private void drawPlotUsingOrdinaryLeastSquares(){
-        ArrayList<Double> listX = new ArrayList<>();
-        ArrayList<Double> listY = new ArrayList<>();
-        for (Point point: points){
-            listX.add(point.getX());
-            listY.add(point.getY());
-        }
-        mnk_class = new MNK_Class(listX, listY);
-        ArrayList<Point> pointsUsingOrdinaryLeastSquaresByLine = mnk_class.calculatePointsUsingOrdinaryLeastSquaresByLine();
-        ArrayList<Point> pointsUsingOrdinaryLeastSquaresByParabola = mnk_class.calculatePointsUsingOrdinaryLeastSquaresByParabola();
-        System.out.println("a: " + mnk_class.getaLine() + ", b: " + mnk_class.getbLine());
-        if(executingMNKByLine){
-            drawPlot(pointsUsingOrdinaryLeastSquaresByLine, TypeOfLine.LINE);
-        }
-        if(executingMNKByParabola){
-            drawPlot(pointsUsingOrdinaryLeastSquaresByParabola, TypeOfLine.PARABOLA);
-        }
-    }
-
-    private void drawPlot(ArrayList<Point> points, TypeOfLine typeOfLine){
+    public void drawPlot(ArrayList<Point> points, TypeOfLine typeOfLine){
         for (int i = 0; i < points.size() - 1; i++) {
             drawLine(points.get(i), points.get(i + 1), typeOfLine);
         }
