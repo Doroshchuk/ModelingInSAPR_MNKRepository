@@ -10,8 +10,8 @@ public class Interface {
     private JFrame frame;
     private Plot plot;
     private Font font = new Font("TimesRoman", Font.PLAIN, 10);
-    JCheckBox checkBoxMNKByLine;
-    JCheckBox checkBoxMNKByParabola;
+    private JCheckBox checkBoxMNKByLine;
+    private JCheckBox checkBoxMNKByParabola;
 
     public static void main(String[] args) {
         new Interface();
@@ -45,47 +45,53 @@ public class Interface {
         plot = new Plot();
         drawingPanel.add(plot);
 
-        JLabel lbl = createLabel("Укажите координаты новой точки: ", new int[]{30, 20, 190, 20}, inputPanel);
+        JLabel lbl = createLabel("<html><div style='text-align: center;'>" + "Укажите координаты новой точки или выбора существующей точки:" + "</div></html>", new int[]{30, 20, 190, 50}, inputPanel);
 
-        createLabel("x = : ", new int[]{80, 50, 40, 20}, inputPanel);
-        JTextField coordinateOfXTF = createTextField(new int[]{100, 50, 60, 20}, "", inputPanel);
+        createLabel("x = ", new int[]{80, 65, 20, 20}, inputPanel);
+        JTextField coordinateOfXTF = createTextField(new int[]{100, 65, 60, 20}, "", inputPanel);
 
-        createLabel("y = : ", new int[]{80, 80, 40, 20}, inputPanel);
-        JTextField coordinateOfYTF = createTextField(new int[]{100, 80, 60, 20}, "", inputPanel);
+        createLabel("y = ", new int[]{80, 95, 20, 20}, inputPanel);
+        JTextField coordinateOfYTF = createTextField(new int[]{100, 95, 60, 20}, "", inputPanel);
 
-        JLabel messageLbl = createLabel("", new int[]{28, 150, 200, 40}, inputPanel);
+        JLabel messageLbl = createLabel("", new int[]{28, 165, 200, 40}, inputPanel);
 
-        JButton addNewPointBtn = createButton(new int[]{40, 110, 40, 40}, "Images/add.png", inputPanel, (ActionEvent event) -> {
+        JButton addNewPointBtn = createButton(new int[]{40, 125, 40, 40}, "Images/add.png", inputPanel, (ActionEvent event) -> {
             double x = Double.parseDouble(coordinateOfXTF.getText());
             double y = Double.parseDouble(coordinateOfYTF.getText());
 
             Point newPoint = new Point(x, y);
-            if(plot.getPoints().contains(newPoint)) {
+            if(plot.getRealPoints().contains(newPoint)) {
+                messageLbl.setText("Данная точка уже есть.");
                 repaintSelectedPoint(newPoint);
             } else {
                 addNewPointAndRepaint(newPoint);
             }
         });
 
-        JButton removeSelectedPointBtn = createButton(new int[]{100, 110, 40, 40}, "Images/delete.png", inputPanel, (ActionEvent event) -> {
+        JButton removeSelectedPointBtn = createButton(new int[]{100, 125, 40, 40}, "Images/delete.png", inputPanel, (ActionEvent event) -> {
             if(!(plot.getSelectedPoint() == null)){
                 drawingPanel.remove(plot);
                 plot.removeSelectedPoint();
                 checkBoxMNKByLine.setSelected(false);
+                plot.setExecutingMNKByLine(false);
                 checkBoxMNKByParabola.setSelected(false);
+                plot.setExecutingMNKByParabola(false);
                 repaintDrawingPanel(plot);
+                messageLbl.setText("");
             } else {
                 String messageText = "Вы не выбрали точку для удаления.";
                 messageLbl.setText("<html><div style='text-align: center;'>" + messageText + "</div></html>");
             }
         });
 
-        JButton removeAllPointsBtn = createButton(new int[]{160, 110, 40, 40}, "Images/clear.png", inputPanel, (ActionEvent event) -> {
+        JButton removeAllPointsBtn = createButton(new int[]{160, 125, 40, 40}, "Images/clear.png", inputPanel, (ActionEvent event) -> {
             drawingPanel.remove(plot);
             plot.getPoints().clear();
-            plot.setChoice(false);
+            plot.getPointsAfterZoom().clear();
             checkBoxMNKByLine.setSelected(false);
+            plot.setExecutingMNKByLine(false);
             checkBoxMNKByParabola.setSelected(false);
+            plot.setExecutingMNKByParabola(false);
             repaintDrawingPanel(plot);
         });
 
@@ -95,8 +101,8 @@ public class Interface {
         checkBoxMNKByParabola = new JCheckBox();
         checkBoxMNKByParabola.setText("MNK by Parabola");
 
-        JLabel lblForCoefMNKByLine = createLabel("", new int[]{10, 220, 160, 20}, inputPanel);
-        JLabel lblForCoefMNKByParabola = createLabel("", new int[]{10, 260, 170, 20}, inputPanel);
+        JLabel lblForCoefMNKByLine = createLabel("", new int[]{10, 225, 160, 20}, inputPanel);
+        JLabel lblForCoefMNKByParabola = createLabel("", new int[]{10, 265, 170, 20}, inputPanel);
         lblForCoefMNKByLine.setVisible(false);
         lblForCoefMNKByParabola.setVisible(false);
         checkBoxMNKByLine.addActionListener(e -> {
@@ -105,7 +111,7 @@ public class Interface {
                 if(plot.getPoints().isEmpty())
                     messageLbl.setText("Укажите точки для построения мнк.");
                 else {
-                    MNK_Class mnk_class = new MNK_Class(plot.getPoints());
+                    MNK_Class mnk_class = new MNK_Class(plot.getPointsAfterZoom());
                     setUpUsingOrdinaryLeastSquares(mnk_class);
                     plot.setExecutingMNKByLine(true);
                     messageLbl.setText("");
@@ -128,7 +134,7 @@ public class Interface {
                 if(plot.getPoints().isEmpty())
                     messageLbl.setText("Укажите точки для исполнения мнк.");
                 else {
-                    MNK_Class mnk_class = new MNK_Class(plot.getPoints());
+                    MNK_Class mnk_class = new MNK_Class(plot.getPointsAfterZoom());
                     setUpUsingOrdinaryLeastSquares(mnk_class);
                     plot.setExecutingMNKByParabola(true);
                     messageLbl.setText("");
@@ -147,23 +153,23 @@ public class Interface {
 
         checkBoxMNKByLine.setVisible(true);
         checkBoxMNKByParabola.setVisible(true);
-        checkBoxMNKByLine.setBounds(10, 200, 90, 20);
+        checkBoxMNKByLine.setBounds(10, 205, 90, 20);
         inputPanel.add(checkBoxMNKByLine);
-        checkBoxMNKByParabola.setBounds(10, 240, 110, 20);
+        checkBoxMNKByParabola.setBounds(10, 245, 110, 20);
         inputPanel.add(checkBoxMNKByParabola);
         setUpInterfaceOfcalculatingY(messageLbl);
     }
 
     private void setUpInterfaceOfcalculatingY(JLabel messageLbl){
         JLabel lblForDescription = createLabel("<html><div style='text-align: center;'>Введите x для подсчёта у:</div></html>", new int[]{10, 280, 300, 20}, inputPanel);
-        createLabel("x = : ", new int[]{20, 312, 30, 20}, inputPanel);
-        JTextField coordinateOfXTF = createTextField(new int[]{50, 312, 60, 20}, "", inputPanel);
-        JButton calculateYUsingMNKByLineBtn = createButton(new int[]{150, 300, 40, 40}, "Images/delete.png", inputPanel, (ActionEvent event) -> {
+        createLabel("x = ", new int[]{20, 317, 20, 20}, inputPanel);
+        JTextField coordinateOfXTF = createTextField(new int[]{40, 317, 60, 20}, "", inputPanel);
+        JButton calculateYUsingMNKByLineBtn = createButton(new int[]{150, 305, 40, 40}, "Images/calculate.png", inputPanel, (ActionEvent event) -> {
             double x = Double.parseDouble(coordinateOfXTF.getText());
-            MNK_Class mnk_class = new MNK_Class(plot.getPoints());
+            MNK_Class mnk_class = new MNK_Class(plot.getPointsAfterZoom());
             setUpUsingOrdinaryLeastSquares(mnk_class);
-            JLabel yByLine = createLabel("", new int[]{20, 340, 150, 20}, inputPanel);
-            JLabel yByParabola = createLabel("", new int[]{20, 360, 150, 20}, inputPanel);
+            JLabel yByLine = createLabel("", new int[]{20, 345, 150, 20}, inputPanel);
+            JLabel yByParabola = createLabel("", new int[]{20, 365, 150, 20}, inputPanel);
             if (checkBoxMNKByLine.isSelected() && checkBoxMNKByParabola.isSelected()){
                 yByLine.setText("(by line) y = " + String.format("%.4f", -mnk_class.calculateYUsingOrdinaryLeastSquaresByLine(x)));
                 yByParabola.setText("(by parabola) y = " + String.format("%.4f", -mnk_class.calculateYUsingOrdinaryLeastSquaresByParabola(x)));
@@ -185,7 +191,14 @@ public class Interface {
         drawingPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                selectPoint(e);
+                Point position = new Point(e.getX() - drawingPanel.getWidth() / 2, drawingPanel.getHeight() / 2 - e.getY());
+                if (plot.isZoom()) {
+                    System.out.println("selectedPoint " + position.getX() + ", " + position.getY());
+                    System.out.println("unt " + ( 1 / plot.getUnitVectorSizeForZoom()));
+                    position = plot.performAffineTransformation(plot.getCenter(), new Point(1 / plot.getUnitVectorSizeForZoom(), plot.getCenter().getY()), new Point(plot.getCenter().getX(), 1 / plot.getUnitVectorSizeForZoom()), position);
+                    System.out.println("selectedPointZoom " + position.getX() + ", " + position.getY());
+                }
+                selectPoint(position);
             }
         });
     }
@@ -231,19 +244,24 @@ public class Interface {
 
     private void addNewPointAndRepaint(Point point){
         checkBoxMNKByLine.setSelected(false);
+        plot.setExecutingMNKByLine(false);
         checkBoxMNKByParabola.setSelected(false);
-        plot.addPoint(point);
+        plot.setExecutingMNKByParabola(false);
+        if ((point.getX() < plot.getMinValue().getX() || point.getX() > plot.getMaxValue().getX()) || (point.getY() < plot.getMinValue().getY() || point.getY() > plot.getMaxValue().getY())){
+                plot.setZoom(true);
+        }
+        plot.setRealPoint(point);
         plot.setSelectedPoint(null);
-        plot.setChoice(true);
+        drawingPanel.remove(plot);
         repaintDrawingPanel(plot);
     }
 
-    private void selectPoint(MouseEvent e){
+    private void selectPoint(Point position){
         double distance = Double.MAX_VALUE;
         Point nearestPoint = null;
-        Point position = new Point(e.getX() - drawingPanel.getWidth() / 2, drawingPanel.getHeight() / 2 - e.getY());
-        for (Point point : plot.getPoints()) {
+        for (Point point : plot.getPointsAfterZoom()) {
             double newDistance = plot.getDistance(point, position);
+            System.out.println(newDistance);
             if (newDistance < 3 && newDistance < distance) {
                 nearestPoint = point;
                 distance = newDistance;
@@ -268,7 +286,7 @@ public class Interface {
 
     private void repaintDrawingPanel(Plot plot){
         drawingPanel.add(plot);
-        drawingPanel.validate();
+        drawingPanel.revalidate();
         drawingPanel.repaint();
     }
 
