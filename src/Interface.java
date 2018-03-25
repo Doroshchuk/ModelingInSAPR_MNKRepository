@@ -87,7 +87,6 @@ public class Interface {
         JButton removeAllPointsBtn = createButton(new int[]{160, 125, 40, 40}, "Images/clear.png", inputPanel, (ActionEvent event) -> {
             drawingPanel.remove(plot);
             plot.getPoints().clear();
-            plot.getPointsAfterZoom().clear();
             checkBoxMNKByLine.setSelected(false);
             plot.setExecutingMNKByLine(false);
             checkBoxMNKByParabola.setSelected(false);
@@ -194,8 +193,9 @@ public class Interface {
                 Point position = new Point(e.getX() - drawingPanel.getWidth() / 2, drawingPanel.getHeight() / 2 - e.getY());
                 if (plot.isZoom()) {
                     System.out.println("selectedPoint " + position.getX() + ", " + position.getY());
-                    System.out.println("unt " + ( 1 / plot.getUnitVectorSizeForZoom()));
-                    position = plot.performAffineTransformation(plot.getCenter(), new Point(1 / plot.getUnitVectorSizeForZoom(), plot.getCenter().getY()), new Point(plot.getCenter().getX(), 1 / plot.getUnitVectorSizeForZoom()), position);
+                    Point rx = new Point(1 / plot.getUnitVectorSizeForZoom(), plot.getCenter().getY());
+                    Point ry = new Point(plot.getCenter().getX(), 1 / plot.getUnitVectorSizeForZoom());
+                    position = plot.performAffineTransformation(plot.getCenter(), rx, ry, position);
                     System.out.println("selectedPointZoom " + position.getX() + ", " + position.getY());
                 }
                 selectPoint(position);
@@ -247,8 +247,8 @@ public class Interface {
         plot.setExecutingMNKByLine(false);
         checkBoxMNKByParabola.setSelected(false);
         plot.setExecutingMNKByParabola(false);
-        if ((point.getX() < plot.getMinValue().getX() || point.getX() > plot.getMaxValue().getX()) || (point.getY() < plot.getMinValue().getY() || point.getY() > plot.getMaxValue().getY())){
-                plot.setZoom(true);
+        if ((point.getX() <= plot.getMinValue().getX() || point.getX() >= plot.getMaxValue().getX()) || (point.getY() <= plot.getMinValue().getY() || point.getY() >= plot.getMaxValue().getY())){
+            plot.setZoom(true);
         }
         plot.setRealPoint(point);
         plot.setSelectedPoint(null);

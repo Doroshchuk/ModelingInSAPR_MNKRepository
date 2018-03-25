@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Plot extends JPanel {
@@ -11,8 +12,6 @@ public class Plot extends JPanel {
     private double unitVectorSizeForZoom;
     private Point center;
     private Map<Point, Point> points; // real point, point after zoom
-    private ArrayList<Line> axisLines;
-    private ArrayList<Line> gridLines;
     private boolean zoom;
     private Point selectedPoint;
     private boolean executingMNKByLine;
@@ -177,10 +176,8 @@ public class Plot extends JPanel {
         unitVectorSizeForZoom = unitVectorSize;
         center = new Point(0, 0);
         points = new HashMap<>();
-        axisLines = new ArrayList<>();
-        gridLines = new ArrayList<>();
-        minValue = new Point(- 1000 / 2 + 20, - 720 / 2 + 20);
-        maxValue = new Point(1000 / 2 - 20, 720 / 2 - 20);
+        minValue = new Point(- 500 + 20, - 340 + 20);
+        maxValue = new Point(500 - 20, 340 - 20);
     }
 
     private void drawLinesForCoordinateGrid() {
@@ -196,37 +193,20 @@ public class Plot extends JPanel {
 
     private void designateCoordinateAxes(){
         graphics.setFont(new Font("TimesRoman", Font.PLAIN, 11));
-        for (int y = - getHeight() / 2; y < getHeight() / 2; y += unitVectorSize){
+        for (int y = getHeight() / 2; y > - getHeight() / 2; y -= unitVectorSize){
             drawLine(new Point(-4, y), new Point(4, y), TypeOfLine.AXISLine);
-            graphics.drawString("" + -y, 4, y);
+            graphics.drawString("" + (-y), 4, y);
         }
-        for (int x = - getWidth() / 2; x < getWidth() / 2; x += unitVectorSize){
+        for (int x = getWidth() / 2 ; x > - getWidth() / 2; x -= unitVectorSize){
             drawLine(new Point(x, -4), new Point(x, 4), TypeOfLine.AXISLine);
-            graphics.drawString("" + -x, x, 10);
+            if (x != 0)
+                graphics.drawString("" + x, x, 10);
         }
     }
 
     public void setRealPoint(Point point){
         points.put(point, point);
     }
-
-//    public Point getRealPointByPointAfterZoom(Point pointAfterZoom){
-//        for (Map.Entry point : points.entrySet()){
-//            if (point.getValue().equals(pointAfterZoom)){
-//                return (Point) point.getKey();
-//            }
-//        }
-//        return null;
-//    }
-//
-//    public Point getPointAfterZoomByRealPoint(Point realPoint){
-//        for (Map.Entry point : points.entrySet()){
-//            if (point.getValue().equals(realPoint)){
-//                return (Point) point.getValue();
-//            }
-//        }
-//        return null;
-//    }
 
     public ArrayList<Point> getRealPoints(){
         ArrayList<Point>realPoints = new ArrayList<>();
@@ -270,14 +250,10 @@ public class Plot extends JPanel {
             case COORDINATEGridLine:
                 graphics.setStroke(new BasicStroke(1f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
                 graphics.setColor(new Color(0f, 0f, 0f, .4f));
-                if (!gridLines.contains(new Line(point1, point2, typeOfLine)))
-                    gridLines.add(new Line(point1, point2, typeOfLine));
                 break;
             case AXISLine:
                 graphics.setStroke(new BasicStroke(1f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
                 graphics.setColor(new Color(0f, 0f, 0f, .8f));
-                if (!axisLines.contains(new Line(point1, point2, typeOfLine)))
-                    axisLines.add(new Line(point1, point2, typeOfLine));
                 break;
             case LINE:
                 graphics.setStroke(new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
@@ -295,66 +271,8 @@ public class Plot extends JPanel {
         graphics.draw(new Line2D.Double(point1.getX(), -point1.getY(), point2.getX(), -point2.getY()));
     }
 
-//    public void zoom(){
-//        maxValue.setX(findMaxValue("x", points));
-//        maxValue.setY(findMaxValue("y", points));
-//        minValue.setX(findMinValue("x", points));
-//        minValue.setY(findMinValue("y", points));
-//
-//        rescaleX = new Rescale(minValue.getX(), maxValue.getX(), minRange.getX(), maxRange.getX());
-//        rescaleY = new Rescale(minValue.getY(), maxValue.getY(), minRange.getY(), maxRange.getY());
-//        for (Point point: points){
-//            point.setX(rescaleX.rescale(point.getX()));
-//            point.setY(rescaleY.rescale(point.getY()));
-//            System.out.println("Point:" + point.getX() + "," + point.getY());
-//        }
-//
-////        Rescale signY = new Rescale(minY, maxY, minRange.getY(), maxRange.getY());
-//        double unitVectorSizeY = Math.abs(rescaleY.rescale(unitVectorSize));
-//        double unitVectorSizeX = Math.abs(rescaleX.rescale(unitVectorSize));
-//        System.out.println("unitVectorSizeY " + unitVectorSizeY);
-//        System.out.println("unitVectorSizeX " + unitVectorSizeX);
-//        if (unitVectorSizeY > unitVectorSizeX){
-//            for (double y = getHeight() / 2 - 20, s = maxValue.getY(); y > - getHeight() / 2 + 20 && s > minValue.getY(); y -= unitVectorSize, s -= unitVectorSizeY){
-//                drawLine(new Point(-4, Math.round(y)), new Point(4, Math.round(y)), TypeOfLine.AXISLine);
-//                graphics.drawString("" + s, 4, Math.round(-y));
-//                System.out.println(y + " | " + s);
-//            }
-//        } else {
-//            for (double y = getHeight() / 2 - 20, s = maxValue.getY(); y > - getHeight() / 2 + 20 && s > minValue.getY(); y -= unitVectorSize, s -= unitVectorSizeX){
-//                drawLine(new Point(-4, Math.round(y)), new Point(4, Math.round(y)), TypeOfLine.AXISLine);
-//                graphics.drawString("" + s, 4, Math.round(-y));
-//                System.out.println(y + " | " + s);
-//            }
-//        }
-//
-//        this.minRange = new Point(minValue.getX(), minValue.getY());
-//        this.maxRange = new Point(maxValue.getX(), maxValue.getY());
-////        for (double sign = (int) minY, h = - getHeight() / 2; sign <= maxY && h < getHeight() / 2; sign += rescaleY.rescale(unitVectorSizeY), h += unitVectorSizeY){
-////            graphics.drawString("" + (int) sign, 4, (int) - h);
-////            System.out.println(sign + "    " + h);
-////        }
-////        for (int x = - getWidth() / 2; x < getWidth() / 2; x += unitVectorSizeX){
-////            graphics.drawString("" + rescaleX.rescale(x), x, 10);
-////
-//    }
-
     public Point performAffineTransformation(Point r0, Point r_x, Point r_y, Point point){
         return new Point(r0.getX() + r_x.getX() * point.getX() + r_x.getY() * point.getY(), r0.getY() + r_y.getX() * point.getX() + r_y.getY() * point.getY());
-//        axisLines = manipulateAffinnesTransformation(axisLines, r0, r_x, r_y);
-//        gridLines = manipulateAffinnesTransformation(gridLines, r0, r_x, r_y);
-    }
-
-    public ArrayList<Line> manipulateAffinnesTransformation(ArrayList<Line> initialLines, Point r0, Point r_x, Point r_y){
-        ArrayList<Line> transformedLines = new ArrayList<>();
-        for (Line initialLine : initialLines) {
-            double x_st = r0.getX() + r_x.getX() * initialLine.getStartPoint().getX() + r_x.getY() * initialLine.getStartPoint().getY();
-            double y_st = r0.getY() + r_y.getX() * initialLine.getStartPoint().getX() + r_y.getY() * initialLine.getStartPoint().getY();
-            double x_en = r0.getX() + r_x.getX() * initialLine.getEndPoint().getX() + r_x.getY() * initialLine.getEndPoint().getY();
-            double y_en = r0.getY() + r_y.getX() * initialLine.getEndPoint().getX() + r_y.getY() * initialLine.getEndPoint().getY();
-            transformedLines.add(new Line(new Point(x_st, y_st), new Point(x_en, y_en), initialLine.getTypeOfLine()));
-        }
-        return transformedLines;
     }
 
     public void zoom(){
@@ -371,41 +289,37 @@ public class Plot extends JPanel {
             unitVectorSizeY = maxValue.getY() / ((getHeight() / 2 - 20) / unitVectorSizeForZoom);
         else unitVectorSizeY = Math.abs(minValue.getY()) / ((getHeight() / 2 - 20) / unitVectorSizeForZoom);
         if (unitVectorSizeX > unitVectorSizeY){
-            System.out.println("unitVectorSizeX " + unitVectorSizeX);
-            center = performAffineTransformation(center, new Point(unitVectorSizeForZoom / unitVectorSizeX, center.getY()), new Point(center.getX(), unitVectorSizeForZoom / unitVectorSizeX), center);
-            for (Point realPoint : points.keySet()){
-                Point pointAfterZoom = performAffineTransformation(center, new Point(unitVectorSizeForZoom / unitVectorSizeX, center.getY()), new Point(center.getX(), unitVectorSizeForZoom / unitVectorSizeX), realPoint);
-                points.put(realPoint, pointAfterZoom);
-                System.out.println("pointAfterZoom " + pointAfterZoom.getX() + ", " + pointAfterZoom.getY());
-            }
-            unitVectorSizeForZoom = unitVectorSizeForZoom / unitVectorSizeX;
-        } else {
-            System.out.println("unitVectorSizeY " + unitVectorSizeY);
-            center = performAffineTransformation(center, new Point(unitVectorSizeForZoom / unitVectorSizeY, center.getY()), new Point(center.getX(), unitVectorSizeForZoom / unitVectorSizeY), center);
-            for (Point realPoint : points.keySet()){
-                System.out.println("realPoint " + realPoint.getX() + ", " + realPoint.getY());
-                Point pointAfterZoom = performAffineTransformation(center, new Point(unitVectorSizeForZoom / unitVectorSizeY, center.getY()), new Point(center.getX(), unitVectorSizeForZoom / unitVectorSizeY), realPoint);
-                points.put(realPoint, pointAfterZoom);
-                System.out.println("pointAfterZoom " + pointAfterZoom.getX() + ", " + pointAfterZoom.getY());
-            }
             unitVectorSizeForZoom = unitVectorSizeForZoom / unitVectorSizeY;
+        } else {
+            unitVectorSizeForZoom = unitVectorSizeForZoom / unitVectorSizeY;
+        }
+        center = performAffineTransformation(center, new Point(unitVectorSizeForZoom, center.getY()), new Point(center.getX(), unitVectorSizeForZoom), center);
+        for (Point realPoint : points.keySet()){
+            Point pointAfterZoom = performAffineTransformation(center, new Point(unitVectorSizeForZoom, center.getY()), new Point(center.getX(), unitVectorSizeForZoom), realPoint);
+            points.put(realPoint, pointAfterZoom);
+            System.out.println("pointAfterZoom " + pointAfterZoom.getX() + ", " + pointAfterZoom.getY());
         }
     }
 
     private void designateCoordinateAxesAfterZooming(){
-//        graphics.setFont(new Font("TimesRoman", Font.PLAIN, 11));
-//        double h = maxValue.getY();
-//        System.out.println("maxValue " + h);
-//        for (int y = getHeight() / 2 - 20; y > - getHeight() / 2 + 20; y -= unitVectorSize){
-//            drawLine(new Point(-4, y), new Point(4, y), TypeOfLine.AXISLine);
-//            graphics.drawString("" + Math.round(h), 4, - y);
-//            h -= unitVectorSizeForZoom;
-//            System.out.println("h " + h);
-//        }
-//        for (int x = getWidth() / 2; x > - getWidth() / 2; x += unitVectorSize){
-//            drawLine(new Point(x, -4), new Point(x, 4), TypeOfLine.AXISLine);
-//            graphics.drawString("" + (minValue.getX() + unitVectorSizeForZoom), x, 10);
-//        }
+        graphics.setFont(new Font("TimesRoman", Font.PLAIN, 11));
+        double h = 0;
+        double hY = maxValue.getY() / (getHeight() / 2 - 20);
+        double hX = maxValue.getX() / (getWidth() / 2 - 20);
+        if (hY > hX)
+            h = hY;
+        else h = hX;
+        for (int y = getHeight() / 2; y > - getHeight() / 2; y -= unitVectorSize){
+            drawLine(new Point(-4, y), new Point(4, y), TypeOfLine.AXISLine);
+            graphics.drawString("" + Math.round(hY * y), 4, -y);
+        }
+        int i = -1;
+        for (int x = getWidth() / 2; x > - getWidth() / 2; x -= unitVectorSize){
+            drawLine(new Point(x, -4), new Point(x, 4), TypeOfLine.AXISLine);
+            if (x != 0)
+                graphics.drawString("" + Math.round(hY * x), x, 10 * i);
+            i *= -1;
+        }
     }
 
     private double findMaxValue(String field, ArrayList<Point> points){
@@ -463,11 +377,12 @@ public class Plot extends JPanel {
     }
 
     public void removeSelectedPoint(){
-        for (Point realPoint: points.keySet()) {
-            if (realPoint.equals(selectedPoint))
-                points.remove(realPoint);
+        for(Iterator<Map.Entry<Point,Point>> it = points.entrySet().iterator(); it.hasNext();){
+            Map.Entry<Point,Point> entry = it.next();
+            if (entry.getKey().equals(selectedPoint)) {
+                it.remove();
+            }
         }
-//        points.remove(new Point(selectedPoint.getX(), selectedPoint.getY()));
     }
 
     public void drawPlot(ArrayList<Point> points, TypeOfLine typeOfLine){
