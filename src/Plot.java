@@ -20,8 +20,6 @@ public class Plot extends JPanel {
     private ArrayList<Point> pointsUsingOrdinaryLeastSquaresByParabola;
     private Point minValue;
     private Point maxValue;
-    private Rescale rescaleX;
-    private Rescale rescaleY;
 
     public double getUnitVectorSizeForZoom() {
         return unitVectorSizeForZoom;
@@ -53,22 +51,6 @@ public class Plot extends JPanel {
 
     public void setMaxValue(Point maxValue) {
         this.maxValue = maxValue;
-    }
-
-    public Rescale getRescaleX() {
-        return rescaleX;
-    }
-
-    public void setRescaleX(Rescale rescaleX) {
-        this.rescaleX = rescaleX;
-    }
-
-    public Rescale getRescaleY() {
-        return rescaleY;
-    }
-
-    public void setRescaleY(Rescale rescaleY) {
-        this.rescaleY = rescaleY;
     }
 
     public ArrayList<Point> getPointsUsingOrdinaryLeastSquaresByLine() {
@@ -158,7 +140,7 @@ public class Plot extends JPanel {
             designateCoordinateAxesAfterZooming();
             drawVertexes(points);
         } else {
-            designateCoordinateAxes();
+            designateCoordinateAxis();
             if (!points.isEmpty())
                 drawVertexes(points);
         }
@@ -173,7 +155,7 @@ public class Plot extends JPanel {
 
     public Plot() {
         unitVectorSize = 20;
-        unitVectorSizeForZoom = unitVectorSize;
+        unitVectorSizeForZoom = 1;
         center = new Point(0, 0);
         points = new HashMap<>();
         minValue = new Point(- 500 + 20, - 340 + 20);
@@ -191,7 +173,7 @@ public class Plot extends JPanel {
         }
     }
 
-    private void designateCoordinateAxes(){
+    private void designateCoordinateAxis(){
         graphics.setFont(new Font("TimesRoman", Font.PLAIN, 11));
         for (int y = getHeight() / 2; y > - getHeight() / 2; y -= unitVectorSize){
             drawLine(new Point(-4, y), new Point(4, y), TypeOfLine.AXISLine);
@@ -289,7 +271,7 @@ public class Plot extends JPanel {
             unitVectorSizeY = maxValue.getY() / ((getHeight() / 2 - 20) / unitVectorSizeForZoom);
         else unitVectorSizeY = Math.abs(minValue.getY()) / ((getHeight() / 2 - 20) / unitVectorSizeForZoom);
         if (unitVectorSizeX > unitVectorSizeY){
-            unitVectorSizeForZoom = unitVectorSizeForZoom / unitVectorSizeY;
+            unitVectorSizeForZoom = unitVectorSizeForZoom / unitVectorSizeX;
         } else {
             unitVectorSizeForZoom = unitVectorSizeForZoom / unitVectorSizeY;
         }
@@ -303,7 +285,7 @@ public class Plot extends JPanel {
 
     private void designateCoordinateAxesAfterZooming(){
         graphics.setFont(new Font("TimesRoman", Font.PLAIN, 11));
-        double h = 0;
+        double h;
         double hY = maxValue.getY() / (getHeight() / 2 - 20);
         double hX = maxValue.getX() / (getWidth() / 2 - 20);
         if (hY > hX)
@@ -311,13 +293,13 @@ public class Plot extends JPanel {
         else h = hX;
         for (int y = getHeight() / 2; y > - getHeight() / 2; y -= unitVectorSize){
             drawLine(new Point(-4, y), new Point(4, y), TypeOfLine.AXISLine);
-            graphics.drawString("" + Math.round(hY * y), 4, -y);
+            graphics.drawString("" + String.format("%.2f", h * y), 4, -y);
         }
         int i = -1;
         for (int x = getWidth() / 2; x > - getWidth() / 2; x -= unitVectorSize){
             drawLine(new Point(x, -4), new Point(x, 4), TypeOfLine.AXISLine);
             if (x != 0)
-                graphics.drawString("" + Math.round(hY * x), x, 10 * i);
+                graphics.drawString("" + String.format("%.2f", h * x), x, 10 * i);
             i *= -1;
         }
     }

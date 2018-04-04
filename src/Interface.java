@@ -191,13 +191,13 @@ public class Interface {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Point position = new Point(e.getX() - drawingPanel.getWidth() / 2, drawingPanel.getHeight() / 2 - e.getY());
-                if (plot.isZoom()) {
+//                if (plot.isZoom()) {
                     System.out.println("selectedPoint " + position.getX() + ", " + position.getY());
                     Point rx = new Point(1 / plot.getUnitVectorSizeForZoom(), plot.getCenter().getY());
                     Point ry = new Point(plot.getCenter().getX(), 1 / plot.getUnitVectorSizeForZoom());
                     position = plot.performAffineTransformation(plot.getCenter(), rx, ry, position);
                     System.out.println("selectedPointZoom " + position.getX() + ", " + position.getY());
-                }
+//                }
                 selectPoint(position);
             }
         });
@@ -247,9 +247,7 @@ public class Interface {
         plot.setExecutingMNKByLine(false);
         checkBoxMNKByParabola.setSelected(false);
         plot.setExecutingMNKByParabola(false);
-        if ((point.getX() <= plot.getMinValue().getX() || point.getX() >= plot.getMaxValue().getX()) || (point.getY() <= plot.getMinValue().getY() || point.getY() >= plot.getMaxValue().getY())){
-            plot.setZoom(true);
-        }
+        plot.setZoom(true);
         plot.setRealPoint(point);
         plot.setSelectedPoint(null);
         drawingPanel.remove(plot);
