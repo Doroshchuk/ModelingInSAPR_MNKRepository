@@ -10,8 +10,8 @@ public class Interface {
     private JFrame frame;
     private Plot plot;
     private Font font = new Font("TimesRoman", Font.PLAIN, 10);
-    private JCheckBox checkBoxMNKByLine;
-    private JCheckBox checkBoxMNKByParabola;
+    private JCheckBox checkBoxPieceLinearInterpolation;
+    private JCheckBox checkBoxInterpolationByLagrangePolynomial;
 
     public static void main(String[] args) {
         new Interface();
@@ -72,10 +72,10 @@ public class Interface {
             if(!(plot.getSelectedPoint() == null)){
                 drawingPanel.remove(plot);
                 plot.removeSelectedPoint();
-                checkBoxMNKByLine.setSelected(false);
-                plot.setExecutingMNKByLine(false);
-                checkBoxMNKByParabola.setSelected(false);
-                plot.setExecutingMNKByParabola(false);
+                checkBoxPieceLinearInterpolation.setSelected(false);
+                plot.setExecutingPieceLinearInterpolation(false);
+                checkBoxInterpolationByLagrangePolynomial.setSelected(false);
+                plot.setExecutingInterpolationByLagrangePolynomial(false);
                 repaintDrawingPanel(plot);
                 messageLbl.setText("");
             } else {
@@ -87,75 +87,75 @@ public class Interface {
         JButton removeAllPointsBtn = createButton(new int[]{160, 125, 40, 40}, "Images/clear.png", inputPanel, (ActionEvent event) -> {
             drawingPanel.remove(plot);
             plot.getPoints().clear();
-            checkBoxMNKByLine.setSelected(false);
-            plot.setExecutingMNKByLine(false);
-            checkBoxMNKByParabola.setSelected(false);
-            plot.setExecutingMNKByParabola(false);
+            checkBoxPieceLinearInterpolation.setSelected(false);
+            plot.setExecutingPieceLinearInterpolation(false);
+            checkBoxInterpolationByLagrangePolynomial.setSelected(false);
+            plot.setExecutingInterpolationByLagrangePolynomial(false);
             repaintDrawingPanel(plot);
         });
 
-        checkBoxMNKByLine = new JCheckBox();
-        checkBoxMNKByLine.setText("MNK by Line");
+        checkBoxPieceLinearInterpolation = new JCheckBox();
+        checkBoxPieceLinearInterpolation.setText("PieceLinearInterpolation");
 
-        checkBoxMNKByParabola = new JCheckBox();
-        checkBoxMNKByParabola.setText("MNK by Parabola");
+        checkBoxInterpolationByLagrangePolynomial = new JCheckBox();
+        checkBoxInterpolationByLagrangePolynomial.setText("InterpolationByLagrangePolynomial");
 
-        JLabel lblForCoefMNKByLine = createLabel("", new int[]{10, 225, 160, 20}, inputPanel);
-        JLabel lblForCoefMNKByParabola = createLabel("", new int[]{10, 265, 170, 20}, inputPanel);
-        lblForCoefMNKByLine.setVisible(false);
-        lblForCoefMNKByParabola.setVisible(false);
-        checkBoxMNKByLine.addActionListener(e -> {
+//        JLabel lblForCoefMNKByLine = createLabel("", new int[]{10, 225, 160, 20}, inputPanel);
+//        JLabel lblForCoefMNKByParabola = createLabel("", new int[]{10, 265, 170, 20}, inputPanel);
+//        lblForCoefMNKByLine.setVisible(false);
+//        lblForCoefMNKByParabola.setVisible(false);
+        checkBoxPieceLinearInterpolation.addActionListener(e -> {
             JCheckBox choice = (JCheckBox) e.getSource();
             if (choice.isSelected()) {
                 if(plot.getPoints().isEmpty())
-                    messageLbl.setText("Укажите точки для построения мнк.");
+                    messageLbl.setText("Укажите точки для интерполяции.");
                 else {
-                    MNK_Class mnk_class = new MNK_Class(plot.getPointsAfterZoom());
-                    setUpUsingOrdinaryLeastSquares(mnk_class);
-                    plot.setExecutingMNKByLine(true);
+                    PieceLinearInterpolation pieceLinearInterpolation = new PieceLinearInterpolation(plot.getPointsAfterZoom());
+                    setUpUsingInterpolation(pieceLinearInterpolation);
+                    plot.setExecutingPieceLinearInterpolation(true);
                     messageLbl.setText("");
-                    lblForCoefMNKByLine.setVisible(true);
-                    lblForCoefMNKByLine.setText("a: " + String.format("%.4f", mnk_class.getaLine()) + ", b: " + String.format("%.4f", mnk_class.getbLine()));
+//                    lblForCoefMNKByLine.setVisible(true);
+//                    lblForCoefMNKByLine.setText("a: " + String.format("%.4f", mnk_class.getaLine()) + ", b: " + String.format("%.4f", mnk_class.getbLine()));
                     repaintDrawingPanel(plot);
                 }
             } else {
-                if (!plot.getPoints().isEmpty() && checkBoxMNKByParabola.isSelected())
+                if (!plot.getPoints().isEmpty() && checkBoxInterpolationByLagrangePolynomial.isSelected())
                     messageLbl.setText("");
-                lblForCoefMNKByLine.setVisible(false);
-                plot.setExecutingMNKByLine(false);
+//                lblForCoefMNKByLine.setVisible(false);
+                plot.setExecutingPieceLinearInterpolation(false);
                 repaintDrawingPanel(plot);
             }
         });
 
-        checkBoxMNKByParabola.addActionListener(e -> {
+        checkBoxInterpolationByLagrangePolynomial.addActionListener(e -> {
             JCheckBox choice = (JCheckBox) e.getSource();
             if (choice.isSelected()) {
                 if(plot.getPoints().isEmpty())
-                    messageLbl.setText("Укажите точки для исполнения мнк.");
+                    messageLbl.setText("Укажите точки для гнтерполяции.");
                 else {
-                    MNK_Class mnk_class = new MNK_Class(plot.getPointsAfterZoom());
-                    setUpUsingOrdinaryLeastSquares(mnk_class);
-                    plot.setExecutingMNKByParabola(true);
+                    LagrangePolynomial lagrangePolynomial = new LagrangePolynomial(plot.getPointsAfterZoom());
+                    setUpUsingInterpolation(lagrangePolynomial);
+                    plot.setExecutingInterpolationByLagrangePolynomial(true);
                     messageLbl.setText("");
-                    lblForCoefMNKByParabola.setVisible(true);
-                    lblForCoefMNKByParabola.setText("a: " + String.format("%.4f", mnk_class.getaParabola()) + ", b: " + String.format("%.4f", mnk_class.getbParabola()) + ", c: " + String.format("%.4f", mnk_class.getcParabola()));
+//                    lblForCoefMNKByParabola.setVisible(true);
+//                    lblForCoefMNKByParabola.setText("a: " + String.format("%.4f", mnk_class.getaParabola()) + ", b: " + String.format("%.4f", mnk_class.getbParabola()) + ", c: " + String.format("%.4f", mnk_class.getcParabola()));
                     repaintDrawingPanel(plot);
                 }
             } else {
-                if (!plot.getPoints().isEmpty() && checkBoxMNKByLine.isSelected())
+                if (!plot.getPoints().isEmpty() && checkBoxPieceLinearInterpolation.isSelected())
                     messageLbl.setText("");
-                lblForCoefMNKByParabola.setVisible(false);
-                plot.setExecutingMNKByParabola(false);
+//                lblForCoefMNKByParabola.setVisible(false);
+                plot.setExecutingInterpolationByLagrangePolynomial(false);
                 repaintDrawingPanel(plot);
             }
         });
 
-        checkBoxMNKByLine.setVisible(true);
-        checkBoxMNKByParabola.setVisible(true);
-        checkBoxMNKByLine.setBounds(10, 205, 90, 20);
-        inputPanel.add(checkBoxMNKByLine);
-        checkBoxMNKByParabola.setBounds(10, 245, 110, 20);
-        inputPanel.add(checkBoxMNKByParabola);
+        checkBoxPieceLinearInterpolation.setVisible(true);
+        checkBoxInterpolationByLagrangePolynomial.setVisible(true);
+        checkBoxPieceLinearInterpolation.setBounds(10, 205, 200, 20);
+        inputPanel.add(checkBoxPieceLinearInterpolation);
+        checkBoxInterpolationByLagrangePolynomial.setBounds(10, 245, 200, 20);
+        inputPanel.add(checkBoxInterpolationByLagrangePolynomial);
         setUpInterfaceOfcalculatingY(messageLbl);
     }
 
@@ -163,27 +163,31 @@ public class Interface {
         JLabel lblForDescription = createLabel("<html><div style='text-align: center;'>Введите x для подсчёта у:</div></html>", new int[]{10, 280, 300, 20}, inputPanel);
         createLabel("x = ", new int[]{20, 317, 20, 20}, inputPanel);
         JTextField coordinateOfXTF = createTextField(new int[]{40, 317, 60, 20}, "", inputPanel);
-        JButton calculateYUsingMNKByLineBtn = createButton(new int[]{150, 305, 40, 40}, "Images/calculate.png", inputPanel, (ActionEvent event) -> {
+        JLabel yByPieceLinearInterpolation = createLabel("", new int[]{20, 345, 150, 20}, inputPanel);
+        JLabel yByLagrangeInterpolation = createLabel("", new int[]{20, 365, 150, 20}, inputPanel);
+        JButton calculateYUsingInterpolation = createButton(new int[]{150, 305, 40, 40}, "Images/calculate.png", inputPanel, (ActionEvent event) -> {
             double x = Double.parseDouble(coordinateOfXTF.getText());
-            MNK_Class mnk_class = new MNK_Class(plot.getPointsAfterZoom());
-            setUpUsingOrdinaryLeastSquares(mnk_class);
-            JLabel yByLine = createLabel("", new int[]{20, 345, 150, 20}, inputPanel);
-            JLabel yByParabola = createLabel("", new int[]{20, 365, 150, 20}, inputPanel);
-            if (checkBoxMNKByLine.isSelected() && checkBoxMNKByParabola.isSelected()){
-                yByLine.setText("(by line) y = " + String.format("%.4f", -mnk_class.calculateYUsingOrdinaryLeastSquaresByLine(x)));
-                yByParabola.setText("(by parabola) y = " + String.format("%.4f", -mnk_class.calculateYUsingOrdinaryLeastSquaresByParabola(x)));
-                yByLine.setVisible(true);
-                yByParabola.setVisible(true);
-            } else if (checkBoxMNKByLine.isSelected() && (!checkBoxMNKByParabola.isSelected())){
-                yByLine.setText("(by line) y = " + String.format("%.4f", -mnk_class.calculateYUsingOrdinaryLeastSquaresByLine(x)));
-                yByLine.setVisible(true);
-                yByParabola.setVisible(false);
-            } else if ((!checkBoxMNKByLine.isSelected()) && checkBoxMNKByParabola.isSelected()){
-                yByParabola.setText("(by parabola) y = " + String.format("%.4f", -mnk_class.calculateYUsingOrdinaryLeastSquaresByParabola(x)));
-                yByParabola.setVisible(true);
-                yByParabola.setVisible(false);
-            } else if ((!checkBoxMNKByLine.isSelected()) && (!checkBoxMNKByParabola.isSelected())){
-                messageLbl.setText("Выберите порядок мнк.");
+            PieceLinearInterpolation pieceLinearInterpolation = new PieceLinearInterpolation(plot.getPointsAfterZoom());
+            LagrangePolynomial lagrangePolynomial = new LagrangePolynomial(plot.getPointsAfterZoom());
+            setUpUsingInterpolation(pieceLinearInterpolation);
+            setUpUsingInterpolation(lagrangePolynomial);
+            yByLagrangeInterpolation.setText("");
+            yByPieceLinearInterpolation.setText("");
+            if (checkBoxPieceLinearInterpolation.isSelected() && checkBoxInterpolationByLagrangePolynomial.isSelected()){
+                yByPieceLinearInterpolation.setText("(pieceLinear) y = " + String.format("%.4f", -pieceLinearInterpolation.executeInterpolation(x, pieceLinearInterpolation.getListX(), pieceLinearInterpolation.getListY())));
+                yByLagrangeInterpolation.setText("(lagrange) y = " + String.format("%.4f", -lagrangePolynomial.executeInterpolation(x, lagrangePolynomial.getListX(), lagrangePolynomial.getListY())));
+                yByPieceLinearInterpolation.setVisible(true);
+                yByLagrangeInterpolation.setVisible(true);
+            } else if (checkBoxPieceLinearInterpolation.isSelected() && (!checkBoxInterpolationByLagrangePolynomial.isSelected())){
+                yByPieceLinearInterpolation.setText("(pieceLinear) y = " + String.format("%.4f", -pieceLinearInterpolation.executeInterpolation(x, pieceLinearInterpolation.getListX(), pieceLinearInterpolation.getListY())));
+                yByPieceLinearInterpolation.setVisible(true);
+                yByLagrangeInterpolation.setVisible(false);
+            } else if ((!checkBoxPieceLinearInterpolation.isSelected()) && checkBoxInterpolationByLagrangePolynomial.isSelected()){
+                yByLagrangeInterpolation.setText("(lagrange) y = " + String.format("%.4f", -lagrangePolynomial.executeInterpolation(x, lagrangePolynomial.getListX(), lagrangePolynomial.getListY())));
+                yByLagrangeInterpolation.setVisible(true);
+                yByLagrangeInterpolation.setVisible(false);
+            } else if ((!checkBoxPieceLinearInterpolation.isSelected()) && (!checkBoxInterpolationByLagrangePolynomial.isSelected())){
+                messageLbl.setText("Выберите тип интерполяции.");
             }
         });
 
@@ -243,10 +247,10 @@ public class Interface {
     }
 
     private void addNewPointAndRepaint(Point point){
-        checkBoxMNKByLine.setSelected(false);
-        plot.setExecutingMNKByLine(false);
-        checkBoxMNKByParabola.setSelected(false);
-        plot.setExecutingMNKByParabola(false);
+        checkBoxPieceLinearInterpolation.setSelected(false);
+        plot.setExecutingPieceLinearInterpolation(false);
+        checkBoxInterpolationByLagrangePolynomial.setSelected(false);
+        plot.setExecutingInterpolationByLagrangePolynomial(false);
         plot.setZoom(true);
         plot.setRealPoint(point);
         plot.setSelectedPoint(null);
@@ -271,11 +275,11 @@ public class Interface {
     }
 
     private void repaintSelectedPoint(Point selectedPoint){
-        if (checkBoxMNKByLine.isSelected()){
-            plot.setExecutingMNKByLine(true);
+        if (checkBoxPieceLinearInterpolation.isSelected()){
+            plot.setExecutingPieceLinearInterpolation(true);
         }
-        if (checkBoxMNKByParabola.isSelected()){
-            plot.setExecutingMNKByParabola(true);
+        if (checkBoxInterpolationByLagrangePolynomial.isSelected()){
+            plot.setExecutingInterpolationByLagrangePolynomial(true);
         }
         drawingPanel.remove(plot);
         plot.setSelectedPoint(selectedPoint);
@@ -288,8 +292,11 @@ public class Interface {
         drawingPanel.repaint();
     }
 
-    private void setUpUsingOrdinaryLeastSquares(MNK_Class mnk_class){
-        plot.setPointsUsingOrdinaryLeastSquaresByLine(mnk_class.calculatePointsUsingOrdinaryLeastSquaresByLine());
-        plot.setPointsUsingOrdinaryLeastSquaresByParabola(mnk_class.calculatePointsUsingOrdinaryLeastSquaresByParabola());
+    private void setUpUsingInterpolation(PieceLinearInterpolation pieceLinearInterpolation){
+        plot.setPointsUsingPieceLinearInterpolation(pieceLinearInterpolation.calculatePoints());
+    }
+
+    private void setUpUsingInterpolation(LagrangePolynomial lagrangePolynomial){
+        plot.setPointsUsingInterpolationByLagrangePolynomial(lagrangePolynomial.calculatePoints());
     }
 }

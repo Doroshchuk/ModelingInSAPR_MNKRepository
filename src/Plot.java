@@ -14,10 +14,10 @@ public class Plot extends JPanel {
     private Map<Point, Point> points; // real point, point after zoom
     private boolean zoom;
     private Point selectedPoint;
-    private boolean executingMNKByLine;
-    private boolean executingMNKByParabola;
-    private ArrayList<Point> pointsUsingOrdinaryLeastSquaresByLine;
-    private ArrayList<Point> pointsUsingOrdinaryLeastSquaresByParabola;
+    private boolean executingPieceLinearInterpolation;
+    private boolean executingInterpolationByLagrangePolynomial;
+    private ArrayList<Point> pointsUsingPieceLinearInterpolation;
+    private ArrayList<Point> pointsUsingInterpolationByLagrangePolynomial;
     private Point minValue;
     private Point maxValue;
 
@@ -53,36 +53,36 @@ public class Plot extends JPanel {
         this.maxValue = maxValue;
     }
 
-    public ArrayList<Point> getPointsUsingOrdinaryLeastSquaresByLine() {
-        return pointsUsingOrdinaryLeastSquaresByLine;
+    public ArrayList<Point> getPointsUsingPieceLinearInterpolation() {
+        return pointsUsingPieceLinearInterpolation;
     }
 
-    public void setPointsUsingOrdinaryLeastSquaresByLine(ArrayList<Point> pointsUsingOrdinaryLeastSquaresByLine) {
-        this.pointsUsingOrdinaryLeastSquaresByLine = pointsUsingOrdinaryLeastSquaresByLine;
+    public void setPointsUsingPieceLinearInterpolation(ArrayList<Point> pointsUsingPieceLinearInterpolation) {
+        this.pointsUsingPieceLinearInterpolation = pointsUsingPieceLinearInterpolation;
     }
 
-    public ArrayList<Point> getPointsUsingOrdinaryLeastSquaresByParabola() {
-        return pointsUsingOrdinaryLeastSquaresByParabola;
+    public ArrayList<Point> getPointsUsingInterpolationByLagrangePolynomial() {
+        return pointsUsingInterpolationByLagrangePolynomial;
     }
 
-    public void setPointsUsingOrdinaryLeastSquaresByParabola(ArrayList<Point> pointsUsingOrdinaryLeastSquaresByParabola) {
-        this.pointsUsingOrdinaryLeastSquaresByParabola = pointsUsingOrdinaryLeastSquaresByParabola;
+    public void setPointsUsingInterpolationByLagrangePolynomial(ArrayList<Point> pointsUsingInterpolationByLagrangePolynomial) {
+        this.pointsUsingInterpolationByLagrangePolynomial = pointsUsingInterpolationByLagrangePolynomial;
     }
 
-    public boolean isExecutingMNKByLine() {
-        return executingMNKByLine;
+    public boolean isExecutingPieceLinearInterpolation() {
+        return executingPieceLinearInterpolation;
     }
 
-    public void setExecutingMNKByLine(boolean executingMNKByLine) {
-        this.executingMNKByLine = executingMNKByLine;
+    public void setExecutingPieceLinearInterpolation(boolean executingPieceLinearInterpolation) {
+        this.executingPieceLinearInterpolation = executingPieceLinearInterpolation;
     }
 
-    public boolean isExecutingMNKByParabola() {
-        return executingMNKByParabola;
+    public boolean isExecutingInterpolationByLagrangePolynomial() {
+        return executingInterpolationByLagrangePolynomial;
     }
 
-    public void setExecutingMNKByParabola(boolean executingMNKByParabola) {
-        this.executingMNKByParabola = executingMNKByParabola;
+    public void setExecutingInterpolationByLagrangePolynomial(boolean executingInterpolationByLagrangePolynomial) {
+        this.executingInterpolationByLagrangePolynomial = executingInterpolationByLagrangePolynomial;
     }
 
     public Point getSelectedPoint() {
@@ -145,11 +145,11 @@ public class Plot extends JPanel {
                 drawVertexes(points);
         }
         drawLinesForCoordinateGrid();
-        if(executingMNKByLine){
-            drawPlot(pointsUsingOrdinaryLeastSquaresByLine, TypeOfLine.LINE);
+        if(executingPieceLinearInterpolation){
+            drawPlot(pointsUsingPieceLinearInterpolation, TypeOfLine.LINE);
         }
-        if(executingMNKByParabola){
-            drawPlot(pointsUsingOrdinaryLeastSquaresByParabola, TypeOfLine.PARABOLA);
+        if(executingInterpolationByLagrangePolynomial){
+            drawPlot(pointsUsingInterpolationByLagrangePolynomial, TypeOfLine.PARABOLA);
         }
     }
 
