@@ -1,17 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class Plot extends JPanel {
     private Graphics2D graphics;
     private double unitVectorSize;
     private double unitVectorSizeForZoom;
     private Point center;
-    private Map<Point, Point> points; // real point, point after zoom
+    private LinkedHashMap<Point, Point> points; // real point, point after zoom
     private boolean zoom;
     private Point selectedPoint;
     private boolean executingPieceLinearInterpolation;
@@ -33,7 +30,7 @@ public class Plot extends JPanel {
         return points;
     }
 
-    public void setPoints(Map<Point, Point> points) {
+    public void setPoints(LinkedHashMap<Point, Point> points) {
         this.points = points;
     }
 
@@ -157,7 +154,7 @@ public class Plot extends JPanel {
         unitVectorSize = 20;
         unitVectorSizeForZoom = 1;
         center = new Point(0, 0);
-        points = new HashMap<>();
+        points = new LinkedHashMap<>();
         minValue = new Point(- 500 + 20, - 340 + 20);
         maxValue = new Point(500 - 20, 340 - 20);
     }
@@ -187,7 +184,10 @@ public class Plot extends JPanel {
     }
 
     public void setRealPoint(Point point){
+        LinkedHashMap<Point, Point> oldPoints = (LinkedHashMap<Point, Point>) points.clone();
+        points.clear();
         points.put(point, point);
+        points.putAll(oldPoints);
     }
 
     public ArrayList<Point> getRealPoints(){
@@ -369,7 +369,9 @@ public class Plot extends JPanel {
 
     public void drawPlot(ArrayList<Point> points, TypeOfLine typeOfLine){
         for (int i = 0; i < points.size() - 1; i++) {
-            drawLine(points.get(i), points.get(i + 1), typeOfLine);
+            Point point1AfterZoom = performAffineTransformation(center, new Point(unitVectorSizeForZoom, center.getY()), new Point(center.getX(), unitVectorSizeForZoom), points.get(i));
+            Point point2AfterZoom = performAffineTransformation(center, new Point(unitVectorSizeForZoom, center.getY()), new Point(center.getX(), unitVectorSizeForZoom), points.get(i + 1));
+            drawLine(point1AfterZoom, point2AfterZoom, typeOfLine);
         }
     }
 }

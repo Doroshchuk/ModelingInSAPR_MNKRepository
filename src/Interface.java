@@ -110,7 +110,7 @@ public class Interface {
                 if(plot.getPoints().isEmpty())
                     messageLbl.setText("Укажите точки для интерполяции.");
                 else {
-                    PieceLinearInterpolation pieceLinearInterpolation = new PieceLinearInterpolation(plot.getPointsAfterZoom());
+                    PieceLinearInterpolation pieceLinearInterpolation = new PieceLinearInterpolation(plot.getRealPoints());
                     setUpUsingInterpolation(pieceLinearInterpolation);
                     plot.setExecutingPieceLinearInterpolation(true);
                     messageLbl.setText("");
@@ -133,7 +133,7 @@ public class Interface {
                 if(plot.getPoints().isEmpty())
                     messageLbl.setText("Укажите точки для гнтерполяции.");
                 else {
-                    LagrangePolynomial lagrangePolynomial = new LagrangePolynomial(plot.getPointsAfterZoom());
+                    LagrangePolynomial lagrangePolynomial = new LagrangePolynomial(plot.getRealPoints());
                     setUpUsingInterpolation(lagrangePolynomial);
                     plot.setExecutingInterpolationByLagrangePolynomial(true);
                     messageLbl.setText("");
@@ -163,27 +163,27 @@ public class Interface {
         JLabel lblForDescription = createLabel("<html><div style='text-align: center;'>Введите x для подсчёта у:</div></html>", new int[]{10, 280, 300, 20}, inputPanel);
         createLabel("x = ", new int[]{20, 317, 20, 20}, inputPanel);
         JTextField coordinateOfXTF = createTextField(new int[]{40, 317, 60, 20}, "", inputPanel);
-        JLabel yByPieceLinearInterpolation = createLabel("", new int[]{20, 345, 150, 20}, inputPanel);
-        JLabel yByLagrangeInterpolation = createLabel("", new int[]{20, 365, 150, 20}, inputPanel);
+        JLabel yByPieceLinearInterpolation = createLabel("", new int[]{20, 345, 200, 20}, inputPanel);
+        JLabel yByLagrangeInterpolation = createLabel("", new int[]{20, 365, 200, 20}, inputPanel);
         JButton calculateYUsingInterpolation = createButton(new int[]{150, 305, 40, 40}, "Images/calculate.png", inputPanel, (ActionEvent event) -> {
             double x = Double.parseDouble(coordinateOfXTF.getText());
-            PieceLinearInterpolation pieceLinearInterpolation = new PieceLinearInterpolation(plot.getPointsAfterZoom());
-            LagrangePolynomial lagrangePolynomial = new LagrangePolynomial(plot.getPointsAfterZoom());
+            PieceLinearInterpolation pieceLinearInterpolation = new PieceLinearInterpolation(plot.getRealPoints());
+            LagrangePolynomial lagrangePolynomial = new LagrangePolynomial(plot.getRealPoints());
             setUpUsingInterpolation(pieceLinearInterpolation);
             setUpUsingInterpolation(lagrangePolynomial);
             yByLagrangeInterpolation.setText("");
             yByPieceLinearInterpolation.setText("");
             if (checkBoxPieceLinearInterpolation.isSelected() && checkBoxInterpolationByLagrangePolynomial.isSelected()){
-                yByPieceLinearInterpolation.setText("(pieceLinear) y = " + String.format("%.4f", -pieceLinearInterpolation.executeInterpolation(x, pieceLinearInterpolation.getListX(), pieceLinearInterpolation.getListY())));
-                yByLagrangeInterpolation.setText("(lagrange) y = " + String.format("%.4f", -lagrangePolynomial.executeInterpolation(x, lagrangePolynomial.getListX(), lagrangePolynomial.getListY())));
+                yByPieceLinearInterpolation.setText("(pieceLinear) y = " + String.format("%.8f", pieceLinearInterpolation.executeInterpolation(x, pieceLinearInterpolation.getListX(), pieceLinearInterpolation.getListY())));
+                yByLagrangeInterpolation.setText("(lagrange) y = " + String.format("%.8f", lagrangePolynomial.executeInterpolation(x, lagrangePolynomial.getListX(), lagrangePolynomial.getListY())));
                 yByPieceLinearInterpolation.setVisible(true);
                 yByLagrangeInterpolation.setVisible(true);
             } else if (checkBoxPieceLinearInterpolation.isSelected() && (!checkBoxInterpolationByLagrangePolynomial.isSelected())){
-                yByPieceLinearInterpolation.setText("(pieceLinear) y = " + String.format("%.4f", -pieceLinearInterpolation.executeInterpolation(x, pieceLinearInterpolation.getListX(), pieceLinearInterpolation.getListY())));
+                yByPieceLinearInterpolation.setText("(pieceLinear) y = " + String.format("%.8f", pieceLinearInterpolation.executeInterpolation(x, pieceLinearInterpolation.getListX(), pieceLinearInterpolation.getListY())));
                 yByPieceLinearInterpolation.setVisible(true);
                 yByLagrangeInterpolation.setVisible(false);
             } else if ((!checkBoxPieceLinearInterpolation.isSelected()) && checkBoxInterpolationByLagrangePolynomial.isSelected()){
-                yByLagrangeInterpolation.setText("(lagrange) y = " + String.format("%.4f", -lagrangePolynomial.executeInterpolation(x, lagrangePolynomial.getListX(), lagrangePolynomial.getListY())));
+                yByLagrangeInterpolation.setText("(lagrange) y = " + String.format("%.8f", lagrangePolynomial.executeInterpolation(x, lagrangePolynomial.getListX(), lagrangePolynomial.getListY())));
                 yByLagrangeInterpolation.setVisible(true);
                 yByLagrangeInterpolation.setVisible(false);
             } else if ((!checkBoxPieceLinearInterpolation.isSelected()) && (!checkBoxInterpolationByLagrangePolynomial.isSelected())){
@@ -293,10 +293,10 @@ public class Interface {
     }
 
     private void setUpUsingInterpolation(PieceLinearInterpolation pieceLinearInterpolation){
-        plot.setPointsUsingPieceLinearInterpolation(pieceLinearInterpolation.calculatePoints());
+        plot.setPointsUsingPieceLinearInterpolation(pieceLinearInterpolation.calculatePoints(plot.getMinValue().getX(), plot.getMaxValue().getX()));
     }
 
     private void setUpUsingInterpolation(LagrangePolynomial lagrangePolynomial){
-        plot.setPointsUsingInterpolationByLagrangePolynomial(lagrangePolynomial.calculatePoints());
+        plot.setPointsUsingInterpolationByLagrangePolynomial(lagrangePolynomial.calculatePoints(plot.getMinValue().getX(), plot.getMaxValue().getX()));
     }
 }

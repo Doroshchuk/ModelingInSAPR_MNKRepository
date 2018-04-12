@@ -41,9 +41,9 @@ public abstract class Interpolation {
 
     public abstract double executeInterpolation(double x, ArrayList<Double> listX, ArrayList<Double> listY);
 
-    public ArrayList<Point> calculatePoints(){
+    public ArrayList<Point> calculatePoints(double minValue, double maxValue){
         ArrayList<Point> resultPoints = new ArrayList<>();
-        for(int i = -500; i <= 500; i++){
+        for(double i = minValue; i <= maxValue; i += 0.01){
             resultPoints.add(new Point(i, executeInterpolation(i, listX, listY)));
         }
         return resultPoints;
