@@ -110,7 +110,10 @@ public class Interface {
                 if(plot.getPoints().isEmpty())
                     messageLbl.setText("Укажите точки для построения мнк.");
                 else {
-                    MNK_Class mnk_class = new MNK_Class(plot.getPointsAfterZoom());
+                    for (Point point: plot.getPointsAfterZoom()){
+                        System.out.println("(" + point.getX() + ", " + point.getY() + ")");
+                    }
+                    MNK_Class mnk_class = new MNK_Class(plot.getRealPoints());
                     setUpUsingOrdinaryLeastSquares(mnk_class);
                     plot.setExecutingMNKByLine(true);
                     messageLbl.setText("");
@@ -133,7 +136,7 @@ public class Interface {
                 if(plot.getPoints().isEmpty())
                     messageLbl.setText("Укажите точки для исполнения мнк.");
                 else {
-                    MNK_Class mnk_class = new MNK_Class(plot.getPointsAfterZoom());
+                    MNK_Class mnk_class = new MNK_Class(plot.getRealPoints());
                     setUpUsingOrdinaryLeastSquares(mnk_class);
                     plot.setExecutingMNKByParabola(true);
                     messageLbl.setText("");
@@ -165,7 +168,7 @@ public class Interface {
         JTextField coordinateOfXTF = createTextField(new int[]{40, 317, 60, 20}, "", inputPanel);
         JButton calculateYUsingMNKByLineBtn = createButton(new int[]{150, 305, 40, 40}, "Images/calculate.png", inputPanel, (ActionEvent event) -> {
             double x = Double.parseDouble(coordinateOfXTF.getText());
-            MNK_Class mnk_class = new MNK_Class(plot.getPointsAfterZoom());
+            MNK_Class mnk_class = new MNK_Class(plot.getRealPoints());
             setUpUsingOrdinaryLeastSquares(mnk_class);
             JLabel yByLine = createLabel("", new int[]{20, 345, 150, 20}, inputPanel);
             JLabel yByParabola = createLabel("", new int[]{20, 365, 150, 20}, inputPanel);

@@ -146,9 +146,19 @@ public class Plot extends JPanel {
         }
         drawLinesForCoordinateGrid();
         if(executingMNKByLine){
+            for(Point point: pointsUsingOrdinaryLeastSquaresByLine){
+                Point newPoint = performAffineTransformation(center, new Point(unitVectorSizeForZoom, center.getY()), new Point(center.getX(), unitVectorSizeForZoom), point);
+                point.setX(newPoint.getX());
+                point.setY(newPoint.getY());
+            }
             drawPlot(pointsUsingOrdinaryLeastSquaresByLine, TypeOfLine.LINE);
         }
         if(executingMNKByParabola){
+            for(Point point: pointsUsingOrdinaryLeastSquaresByParabola){
+                Point newPoint = performAffineTransformation(center, new Point(unitVectorSizeForZoom, center.getY()), new Point(center.getX(), unitVectorSizeForZoom), point);
+                point.setX(newPoint.getX());
+                point.setY(newPoint.getY());
+            }
             drawPlot(pointsUsingOrdinaryLeastSquaresByParabola, TypeOfLine.PARABOLA);
         }
     }
