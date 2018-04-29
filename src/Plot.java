@@ -6,7 +6,7 @@ import java.util.*;
 public class Plot extends JPanel {
     private Graphics2D graphics;
     private double unitVectorSize;
-    private double unitVectorSizeForZoom;
+    private float zoom;
     private Point center;
     private LinkedHashMap<Point, Point> points; // real point, point after zoom
     private Point selectedPoint;
@@ -19,6 +19,8 @@ public class Plot extends JPanel {
     private boolean transformationOfPlot;
     private ArrayList<Line> axisLines;
     private ArrayList<Line> gridLines;
+    public static int width = 1000;
+    public static int height = 720;
 
     public ArrayList<Line> getAxisLines() {
         return axisLines;
@@ -44,12 +46,12 @@ public class Plot extends JPanel {
         this.transformationOfPlot = transformationOfPlot;
     }
 
-    public double getUnitVectorSizeForZoom() {
-        return unitVectorSizeForZoom;
+    public float getZoom() {
+        return zoom;
     }
 
-    public void setUnitVectorSizeForZoom(double unitVectorSizeForZoom) {
-        this.unitVectorSizeForZoom = unitVectorSizeForZoom;
+    public void setZoom(float zoom) {
+        this.zoom = zoom;
     }
 
     public Map<Point, Point> getPoints() {
@@ -134,7 +136,7 @@ public class Plot extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(2000, 1440);
+        return new Dimension(width, height);
     }
 
     @Override
@@ -152,7 +154,6 @@ public class Plot extends JPanel {
         } else {
             drawTransformedLines(axisLines);
             drawTransformedLines(gridLines);
-            transformationOfPlot = false;
         }
         if (!points.isEmpty())
             drawVertexes(points);
@@ -166,7 +167,7 @@ public class Plot extends JPanel {
 
     public Plot() {
         unitVectorSize = 20;
-        unitVectorSizeForZoom = 1;
+        zoom = 1;
         center = new Point(0, 0);
         points = new LinkedHashMap<>();
         minValue = new Point(- 1000 + 20, - 720 + 20);
@@ -285,7 +286,7 @@ public class Plot extends JPanel {
         return new Point(r0.getX() + r_x.getX() * point.getX() + r_x.getY() * point.getY(), r0.getY() + r_y.getX() * point.getX() + r_y.getY() * point.getY());
     }
 
-    public void zoom(double coef){
+    public void zoom(float coef){
 //        maxValue.setX(findMaxValue("x", getRealPoints()));
 //        maxValue.setY(findMaxValue("y", getRealPoints()));
 //        minValue.setX(findMinValue("x", getRealPoints()));
@@ -293,29 +294,30 @@ public class Plot extends JPanel {
 //        double unitVectorSizeX = 0;
 //        double unitVectorSizeY = 0;
 //        if (maxValue.getX() > Math.abs(minValue.getX()))
-//            unitVectorSizeX = maxValue.getX() / ((getWidth() / 2 - 20) / unitVectorSizeForZoom);
-//        else unitVectorSizeX = Math.abs(minValue.getX()) / ((getWidth() / 2 - 20) / unitVectorSizeForZoom);
+//            unitVectorSizeX = maxValue.getX() / ((getWidth() / 2 - 20) / zoom);
+//        else unitVectorSizeX = Math.abs(minValue.getX()) / ((getWidth() / 2 - 20) / zoom);
 //        if (maxValue.getY() > Math.abs(minValue.getY()))
-//            unitVectorSizeY = maxValue.getY() / ((getHeight() / 2 - 20) / unitVectorSizeForZoom);
-//        else unitVectorSizeY = Math.abs(minValue.getY()) / ((getHeight() / 2 - 20) / unitVectorSizeForZoom);
+//            unitVectorSizeY = maxValue.getY() / ((getHeight() / 2 - 20) / zoom);
+//        else unitVectorSizeY = Math.abs(minValue.getY()) / ((getHeight() / 2 - 20) / zoom);
 //        if (unitVectorSizeX > unitVectorSizeY){
-//            unitVectorSizeForZoom = unitVectorSizeForZoom / unitVectorSizeX;
+//            zoom = zoom / unitVectorSizeX;
 //        } else {
-//            unitVectorSizeForZoom = unitVectorSizeForZoom / unitVectorSizeY;
+//            zoom = zoom / unitVectorSizeY;
 //        }
-//        center = performAffineTransformation(center, new Point(unitVectorSizeForZoom, center.getY()), new Point(center.getX(), unitVectorSizeForZoom), center);
+//        center = performAffineTransformation(center, new Point(zoom, center.getY()), new Point(center.getX(), zoom), center);
 //        for (Point realPoint : points.keySet()){
-//            Point pointAfterZoom = performAffineTransformation(center, new Point(unitVectorSizeForZoom, center.getY()), new Point(center.getX(), unitVectorSizeForZoom), realPoint);
+//            Point pointAfterZoom = performAffineTransformation(center, new Point(zoom, center.getY()), new Point(center.getX(), zoom), realPoint);
 //            points.put(realPoint, pointAfterZoom);
 //            System.out.println("pointAfterZoom " + pointAfterZoom.getX() + ", " + pointAfterZoom.getY());
 //        }
+        zoom = coef;
         transformationOfPlot = true;
         for (Point realPoint : points.keySet()){
             Point pointAfterZoom = performAffineTransformation(center, new Point(coef, center.getY()), new Point(center.getX(), coef), realPoint);
             points.put(realPoint, pointAfterZoom);
             System.out.println("pointAfterZoom " + pointAfterZoom.getX() + ", " + pointAfterZoom.getY());
         }
-//        unitVectorSizeForZoom = performAffineTransformation(center, new Point(coef, center.getY()), new Point(center.getX(), coef), unitVectorSizeForZoom);
+//        zoom = performAffineTransformation(center, new Point(coef, center.getY()), new Point(center.getX(), coef), zoom);
         gridLines = manipulateAffinnesTransformation(gridLines, center, new Point(coef, center.getY()), new Point(center.getX(), coef));
         axisLines = manipulateAffinnesTransformation(axisLines, center, new Point(coef, center.getY()), new Point(center.getX(), coef));
         center = performAffineTransformation(center, new Point(coef, center.getY()), new Point(center.getX(), coef), center);
@@ -417,8 +419,8 @@ public class Plot extends JPanel {
 
     public void drawPlot(ArrayList<Point> points, TypeOfLine typeOfLine){
         for (int i = 0; i < points.size() - 1; i++) {
-            Point point1AfterZoom = performAffineTransformation(center, new Point(unitVectorSizeForZoom, center.getY()), new Point(center.getX(), unitVectorSizeForZoom), points.get(i));
-            Point point2AfterZoom = performAffineTransformation(center, new Point(unitVectorSizeForZoom, center.getY()), new Point(center.getX(), unitVectorSizeForZoom), points.get(i + 1));
+            Point point1AfterZoom = performAffineTransformation(center, new Point(zoom, center.getY()), new Point(center.getX(), zoom), points.get(i));
+            Point point2AfterZoom = performAffineTransformation(center, new Point(zoom, center.getY()), new Point(center.getX(), zoom), points.get(i + 1));
             drawLine(point1AfterZoom, point2AfterZoom, typeOfLine);
         }
     }

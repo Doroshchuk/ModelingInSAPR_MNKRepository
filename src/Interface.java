@@ -105,11 +105,6 @@ public class Interface {
 
         checkBoxInterpolationByLagrangePolynomial = new JCheckBox();
         checkBoxInterpolationByLagrangePolynomial.setText("InterpolationByLagrangePolynomial");
-
-//        JLabel lblForCoefMNKByLine = createLabel("", new int[]{10, 225, 160, 20}, inputPanel);
-//        JLabel lblForCoefMNKByParabola = createLabel("", new int[]{10, 265, 170, 20}, inputPanel);
-//        lblForCoefMNKByLine.setVisible(false);
-//        lblForCoefMNKByParabola.setVisible(false);
         checkBoxPieceLinearInterpolation.addActionListener(e -> {
             JCheckBox choice = (JCheckBox) e.getSource();
             if (choice.isSelected()) {
@@ -120,14 +115,11 @@ public class Interface {
                     setUpUsingInterpolation(pieceLinearInterpolation);
                     plot.setExecutingPieceLinearInterpolation(true);
                     messageLbl.setText("");
-//                    lblForCoefMNKByLine.setVisible(true);
-//                    lblForCoefMNKByLine.setText("a: " + String.format("%.4f", mnk_class.getaLine()) + ", b: " + String.format("%.4f", mnk_class.getbLine()));
                     repaintDrawingPanel(plot);
                 }
             } else {
                 if (!plot.getPoints().isEmpty() && checkBoxInterpolationByLagrangePolynomial.isSelected())
                     messageLbl.setText("");
-//                lblForCoefMNKByLine.setVisible(false);
                 plot.setExecutingPieceLinearInterpolation(false);
                 repaintDrawingPanel(plot);
             }
@@ -143,14 +135,11 @@ public class Interface {
                     setUpUsingInterpolation(lagrangePolynomial);
                     plot.setExecutingInterpolationByLagrangePolynomial(true);
                     messageLbl.setText("");
-//                    lblForCoefMNKByParabola.setVisible(true);
-//                    lblForCoefMNKByParabola.setText("a: " + String.format("%.4f", mnk_class.getaParabola()) + ", b: " + String.format("%.4f", mnk_class.getbParabola()) + ", c: " + String.format("%.4f", mnk_class.getcParabola()));
                     repaintDrawingPanel(plot);
                 }
             } else {
                 if (!plot.getPoints().isEmpty() && checkBoxPieceLinearInterpolation.isSelected())
                     messageLbl.setText("");
-//                lblForCoefMNKByParabola.setVisible(false);
                 plot.setExecutingInterpolationByLagrangePolynomial(false);
                 repaintDrawingPanel(plot);
             }
@@ -162,65 +151,32 @@ public class Interface {
         inputPanel.add(checkBoxPieceLinearInterpolation);
         checkBoxInterpolationByLagrangePolynomial.setBounds(10, 245, 200, 20);
         inputPanel.add(checkBoxInterpolationByLagrangePolynomial);
-        setUpInterfaceOfcalculatingY(messageLbl);
+        drawingPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Point position = new Point(e.getX() - drawingPanel.getWidth() / 2, drawingPanel.getHeight() / 2 - e.getY());
+                System.out.println("selectedPoint " + position.getX() + ", " + position.getY());
+                Point rx = new Point(1 / plot.getZoom(), plot.getCenter().getY());
+                Point ry = new Point(plot.getCenter().getX(), 1 / plot.getZoom());
+                position = plot.performAffineTransformation(plot.getCenter(), rx, ry, position);
+                System.out.println("selectedPointZoom " + position.getX() + ", " + position.getY());
+                selectPoint(position);
+            }
+        });
         JButton btnOfZoomIn = createButton(new int[]{50, 560, 40, 40}, "Images/zoomIn.png", inputPanel, event -> {
             drawingPanel.remove(plot);
-            plot.zoom(1.1);
+            plot.zoom(1.1f);
+            Plot.width = Math.round(Plot.width * 1.1f);
+            Plot.height = Math.round(Plot.height * 1.1f);
             repaintDrawingPanel(plot);
         });
 
         JButton btnOfZoomOut = createButton(new int[]{110, 560, 40, 40}, "Images/zoomOut.png", inputPanel, event -> {
             drawingPanel.remove(plot);
-            plot.zoom(0.9);
+            plot.zoom(0.9f);
+            Plot.width = Math.round(Plot.width * 0.9f);
+            Plot.height = Math.round(Plot.height * 0.9f);
             repaintDrawingPanel(plot);
-        });
-    }
-
-    private void setUpInterfaceOfcalculatingY(JLabel messageLbl){
-        JLabel lblForDescription = createLabel("<html><div style='text-align: center;'>Введите x для подсчёта у:</div></html>", new int[]{10, 280, 300, 20}, inputPanel);
-        createLabel("x = ", new int[]{20, 317, 20, 20}, inputPanel);
-        JTextField coordinateOfXTF = createTextField(new int[]{40, 317, 60, 20}, "", inputPanel);
-        JLabel yByPieceLinearInterpolation = createLabel("", new int[]{20, 345, 200, 20}, inputPanel);
-        JLabel yByLagrangeInterpolation = createLabel("", new int[]{20, 365, 200, 20}, inputPanel);
-        JButton calculateYUsingInterpolation = createButton(new int[]{150, 305, 40, 40}, "Images/calculate.png", inputPanel, (ActionEvent event) -> {
-            double x = Double.parseDouble(coordinateOfXTF.getText());
-            PieceLinearInterpolation pieceLinearInterpolation = new PieceLinearInterpolation(plot.getRealPoints());
-            LagrangePolynomial lagrangePolynomial = new LagrangePolynomial(plot.getRealPoints());
-            setUpUsingInterpolation(pieceLinearInterpolation);
-            setUpUsingInterpolation(lagrangePolynomial);
-            yByLagrangeInterpolation.setText("");
-            yByPieceLinearInterpolation.setText("");
-            if (checkBoxPieceLinearInterpolation.isSelected() && checkBoxInterpolationByLagrangePolynomial.isSelected()){
-                yByPieceLinearInterpolation.setText("(pieceLinear) y = " + String.format("%.8f", pieceLinearInterpolation.executeInterpolation(x, pieceLinearInterpolation.getListX(), pieceLinearInterpolation.getListY())));
-                yByLagrangeInterpolation.setText("(lagrange) y = " + String.format("%.8f", lagrangePolynomial.executeInterpolation(x, lagrangePolynomial.getListX(), lagrangePolynomial.getListY())));
-                yByPieceLinearInterpolation.setVisible(true);
-                yByLagrangeInterpolation.setVisible(true);
-            } else if (checkBoxPieceLinearInterpolation.isSelected() && (!checkBoxInterpolationByLagrangePolynomial.isSelected())){
-                yByPieceLinearInterpolation.setText("(pieceLinear) y = " + String.format("%.8f", pieceLinearInterpolation.executeInterpolation(x, pieceLinearInterpolation.getListX(), pieceLinearInterpolation.getListY())));
-                yByPieceLinearInterpolation.setVisible(true);
-                yByLagrangeInterpolation.setVisible(false);
-            } else if ((!checkBoxPieceLinearInterpolation.isSelected()) && checkBoxInterpolationByLagrangePolynomial.isSelected()){
-                yByLagrangeInterpolation.setText("(lagrange) y = " + String.format("%.8f", lagrangePolynomial.executeInterpolation(x, lagrangePolynomial.getListX(), lagrangePolynomial.getListY())));
-                yByLagrangeInterpolation.setVisible(true);
-                yByLagrangeInterpolation.setVisible(false);
-            } else if ((!checkBoxPieceLinearInterpolation.isSelected()) && (!checkBoxInterpolationByLagrangePolynomial.isSelected())){
-                messageLbl.setText("Выберите тип интерполяции.");
-            }
-        });
-
-        drawingPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Point position = new Point(e.getX() - drawingPanel.getWidth() / 2, drawingPanel.getHeight() / 2 - e.getY());
-//                if (plot.isZoom()) {
-                    System.out.println("selectedPoint " + position.getX() + ", " + position.getY());
-                    Point rx = new Point(1 / plot.getUnitVectorSizeForZoom(), plot.getCenter().getY());
-                    Point ry = new Point(plot.getCenter().getX(), 1 / plot.getUnitVectorSizeForZoom());
-                    position = plot.performAffineTransformation(plot.getCenter(), rx, ry, position);
-                    System.out.println("selectedPointZoom " + position.getX() + ", " + position.getY());
-//                }
-                selectPoint(position);
-            }
         });
     }
 
@@ -306,8 +262,7 @@ public class Interface {
         drawingPanel.add(plot);
         drawingPanel.revalidate();
         drawingPanel.repaint();
-        frame.revalidate();
-        frame.repaint();
+        scrollPane.setViewportView(drawingPanel);
     }
 
     private void setUpUsingInterpolation(PieceLinearInterpolation pieceLinearInterpolation){
