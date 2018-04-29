@@ -9,6 +9,7 @@ public class Interface {
     private JPanel inputPanel, drawingPanel;
     private JFrame frame;
     private Plot plot;
+    private JScrollPane scrollPane;
     private Font font = new Font("TimesRoman", Font.PLAIN, 10);
     private JCheckBox checkBoxPieceLinearInterpolation;
     private JCheckBox checkBoxInterpolationByLagrangePolynomial;
@@ -27,14 +28,12 @@ public class Interface {
                 frame.setResizable(false);
                 frame.setSize(1200, 660);
                 setUpInterface();
-                JScrollPane scrollPane = new JScrollPane(drawingPanel);
+                scrollPane = new JScrollPane();
+                scrollPane.setPreferredSize(new Dimension(1000, 660));
                 scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-                scrollPane.setBounds(0, 0, 1000, 660);
-                JPanel contentPane = new JPanel(null);
-                contentPane.setPreferredSize(new Dimension(1000, 660));
-                contentPane.add(scrollPane);
-                frame.add(contentPane, BorderLayout.WEST);
+                scrollPane.setViewportView(drawingPanel);
+                frame.add(scrollPane, BorderLayout.WEST);
                 frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
@@ -164,6 +163,17 @@ public class Interface {
         checkBoxInterpolationByLagrangePolynomial.setBounds(10, 245, 200, 20);
         inputPanel.add(checkBoxInterpolationByLagrangePolynomial);
         setUpInterfaceOfcalculatingY(messageLbl);
+        JButton btnOfZoomIn = createButton(new int[]{50, 560, 40, 40}, "Images/zoomIn.png", inputPanel, event -> {
+            drawingPanel.remove(plot);
+            plot.zoom(1.1);
+            repaintDrawingPanel(plot);
+        });
+
+        JButton btnOfZoomOut = createButton(new int[]{110, 560, 40, 40}, "Images/zoomOut.png", inputPanel, event -> {
+            drawingPanel.remove(plot);
+            plot.zoom(0.9);
+            repaintDrawingPanel(plot);
+        });
     }
 
     private void setUpInterfaceOfcalculatingY(JLabel messageLbl){
@@ -258,7 +268,6 @@ public class Interface {
         plot.setExecutingPieceLinearInterpolation(false);
         checkBoxInterpolationByLagrangePolynomial.setSelected(false);
         plot.setExecutingInterpolationByLagrangePolynomial(false);
-        plot.setZoom(true);
         plot.setRealPoint(point);
         plot.setSelectedPoint(null);
         drawingPanel.remove(plot);
@@ -297,6 +306,8 @@ public class Interface {
         drawingPanel.add(plot);
         drawingPanel.revalidate();
         drawingPanel.repaint();
+        frame.revalidate();
+        frame.repaint();
     }
 
     private void setUpUsingInterpolation(PieceLinearInterpolation pieceLinearInterpolation){
