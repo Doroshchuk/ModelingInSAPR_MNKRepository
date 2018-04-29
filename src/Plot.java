@@ -116,7 +116,7 @@ public class Plot extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(1000, 720);
+        return new Dimension(2000, 1440);
     }
 
     @Override

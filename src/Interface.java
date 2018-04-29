@@ -25,9 +25,16 @@ public class Interface {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setLayout(new BorderLayout());
                 frame.setResizable(false);
-                frame.setSize(1200, 720);
+                frame.setSize(1200, 660);
                 setUpInterface();
-                frame.add(drawingPanel, BorderLayout.WEST);
+                JScrollPane scrollPane = new JScrollPane(drawingPanel);
+                scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                scrollPane.setBounds(0, 0, 1000, 660);
+                JPanel contentPane = new JPanel(null);
+                contentPane.setPreferredSize(new Dimension(1000, 660));
+                contentPane.add(scrollPane);
+                frame.add(contentPane, BorderLayout.WEST);
                 frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
