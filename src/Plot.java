@@ -6,7 +6,7 @@ import java.util.*;
 public class Plot extends JPanel {
     private Graphics2D graphics;
     private double unitVectorSize;
-    private float zoom;
+    private double zoom;
     private Point center;
     private LinkedHashMap<Point, Point> points; // real point, point after zoom
     private Point selectedPoint;
@@ -46,11 +46,11 @@ public class Plot extends JPanel {
         this.transformationOfPlot = transformationOfPlot;
     }
 
-    public float getZoom() {
+    public double getZoom() {
         return zoom;
     }
 
-    public void setZoom(float zoom) {
+    public void setZoom(double zoom) {
         this.zoom = zoom;
     }
 
@@ -184,13 +184,13 @@ public class Plot extends JPanel {
     }
 
     private void drawLinesForCoordinateGrid() {
-        for (int i = 0; i < getWidth(); i += unitVectorSize) {
+        for (int i = 0; i < width; i += unitVectorSize) {
             //vertical lines
-            drawLine(new Point(center.getX() - getWidth() / 2 + i, center.getY() + getHeight()), new Point(center.getX() - getWidth() / 2 + i, center.getY() - getHeight()), TypeOfLine.COORDINATEGridLine);
+            drawLine(new Point(center.getX() - width / 2 + i, center.getY() + height), new Point(center.getX() - width / 2 + i, center.getY() - height), TypeOfLine.COORDINATEGridLine);
         }
-        for (int i = 0; i < getHeight(); i += unitVectorSize) {
+        for (int i = 0; i < height; i += unitVectorSize) {
             //horizontal lines
-            drawLine(new Point(center.getX() - getWidth(), center.getY() - getHeight() / 2 + i), new Point(center.getX() + getWidth(), center.getY() - getHeight() / 2 + i), TypeOfLine.COORDINATEGridLine);
+            drawLine(new Point(center.getX() - width, center.getY() - height / 2 + i), new Point(center.getX() + width, center.getY() - height / 2 + i), TypeOfLine.COORDINATEGridLine);
         }
     }
 
@@ -228,16 +228,16 @@ public class Plot extends JPanel {
 
     private void drawAxis() {
         //x and y lines
-        drawLine(new Point(center.getX(), center.getY() - getHeight() / 2), new Point(center.getX(), center.getY() + getHeight() / 2), TypeOfLine.AXISLine);
-        drawLine(new Point(center.getX() - 10, center.getY() + getHeight() / 2 - 10), new Point(center.getX(), center.getY() + getHeight() / 2), TypeOfLine.AXISLine);
-        drawLine(new Point(center.getX() + 10, center.getY() + getHeight() / 2 - 10), new Point(center.getX(), center.getY() + getHeight() / 2), TypeOfLine.AXISLine);
+        drawLine(new Point(center.getX(), center.getY() - height / 2), new Point(center.getX(), center.getY() + height / 2), TypeOfLine.AXISLine);
+        drawLine(new Point(center.getX() - 10, center.getY() + height / 2 - 10), new Point(center.getX(), center.getY() + height / 2), TypeOfLine.AXISLine);
+        drawLine(new Point(center.getX() + 10, center.getY() + height / 2 - 10), new Point(center.getX(), center.getY() + height / 2), TypeOfLine.AXISLine);
 
-        drawLine(new Point(center.getX() - getWidth() / 2, center.getY()), new Point(center.getX() + getWidth() / 2, center.getY()), TypeOfLine.AXISLine);
-        drawLine(new Point(center.getX() + getWidth() / 2 - 10, center.getY() - 10), new Point(center.getX() + getWidth() / 2, center.getY()), TypeOfLine.AXISLine);
-        drawLine(new Point(center.getX() + getWidth() / 2 - 10, center.getY() + 10), new Point(center.getX() + getWidth() / 2, center.getY()), TypeOfLine.AXISLine);
+        drawLine(new Point(center.getX() - width / 2, center.getY()), new Point(center.getX() + width / 2, center.getY()), TypeOfLine.AXISLine);
+        drawLine(new Point(center.getX() + width / 2 - 10, center.getY() - 10), new Point(center.getX() + width / 2, center.getY()), TypeOfLine.AXISLine);
+        drawLine(new Point(center.getX() + width / 2 - 10, center.getY() + 10), new Point(center.getX() + width / 2, center.getY()), TypeOfLine.AXISLine);
         graphics.setFont(new Font("TimesRoman", Font.BOLD, 13));
-        graphics.drawString("y", (int) center.getX() + 20, (int) (center.getY() - getHeight() / 2 + 15));
-        graphics.drawString("x", (int) (center.getX() + getWidth() / 2 - 30), (int)center.getY() - 15);
+        graphics.drawString("y", (int) center.getX() + 20, (int) (center.getY() - height / 2 + 15));
+        graphics.drawString("x", (int) (center.getX() + width / 2 - 30), (int)center.getY() - 15);
     }
 
     private void drawVertexes(Map<Point, Point> points) {
@@ -286,31 +286,34 @@ public class Plot extends JPanel {
         return new Point(r0.getX() + r_x.getX() * point.getX() + r_x.getY() * point.getY(), r0.getY() + r_y.getX() * point.getX() + r_y.getY() * point.getY());
     }
 
+    public void zoom(){
+        maxValue.setX(findMaxValue("x", getRealPoints()));
+        maxValue.setY(findMaxValue("y", getRealPoints()));
+        minValue.setX(findMinValue("x", getRealPoints()));
+        minValue.setY(findMinValue("y", getRealPoints()));
+        double unitVectorSizeX = 0;
+        double unitVectorSizeY = 0;
+        if (maxValue.getX() > Math.abs(minValue.getX()))
+            unitVectorSizeX = maxValue.getX() / ((getWidth() / 2 - 20) / zoom);
+        else unitVectorSizeX = Math.abs(minValue.getX()) / ((getWidth() / 2 - 20) / zoom);
+        if (maxValue.getY() > Math.abs(minValue.getY()))
+            unitVectorSizeY = maxValue.getY() / ((getHeight() / 2 - 20) / zoom);
+        else unitVectorSizeY = Math.abs(minValue.getY()) / ((getHeight() / 2 - 20) / zoom);
+        if (unitVectorSizeX > unitVectorSizeY){
+            zoom = zoom / unitVectorSizeX;
+        } else {
+            zoom = zoom / unitVectorSizeY;
+        }
+        center = performAffineTransformation(center, new Point(zoom, center.getY()), new Point(center.getX(), zoom), center);
+        for (Point realPoint : points.keySet()){
+            Point pointAfterZoom = performAffineTransformation(center, new Point(zoom, center.getY()), new Point(center.getX(), zoom), realPoint);
+            points.put(realPoint, pointAfterZoom);
+            System.out.println("pointAfterZoom " + pointAfterZoom.getX() + ", " + pointAfterZoom.getY());
+        }
+    }
+
     public void zoom(float coef){
-//        maxValue.setX(findMaxValue("x", getRealPoints()));
-//        maxValue.setY(findMaxValue("y", getRealPoints()));
-//        minValue.setX(findMinValue("x", getRealPoints()));
-//        minValue.setY(findMinValue("y", getRealPoints()));
-//        double unitVectorSizeX = 0;
-//        double unitVectorSizeY = 0;
-//        if (maxValue.getX() > Math.abs(minValue.getX()))
-//            unitVectorSizeX = maxValue.getX() / ((getWidth() / 2 - 20) / zoom);
-//        else unitVectorSizeX = Math.abs(minValue.getX()) / ((getWidth() / 2 - 20) / zoom);
-//        if (maxValue.getY() > Math.abs(minValue.getY()))
-//            unitVectorSizeY = maxValue.getY() / ((getHeight() / 2 - 20) / zoom);
-//        else unitVectorSizeY = Math.abs(minValue.getY()) / ((getHeight() / 2 - 20) / zoom);
-//        if (unitVectorSizeX > unitVectorSizeY){
-//            zoom = zoom / unitVectorSizeX;
-//        } else {
-//            zoom = zoom / unitVectorSizeY;
-//        }
-//        center = performAffineTransformation(center, new Point(zoom, center.getY()), new Point(center.getX(), zoom), center);
-//        for (Point realPoint : points.keySet()){
-//            Point pointAfterZoom = performAffineTransformation(center, new Point(zoom, center.getY()), new Point(center.getX(), zoom), realPoint);
-//            points.put(realPoint, pointAfterZoom);
-//            System.out.println("pointAfterZoom " + pointAfterZoom.getX() + ", " + pointAfterZoom.getY());
-//        }
-        zoom = coef;
+        zoom = zoom * coef;
         transformationOfPlot = true;
         for (Point realPoint : points.keySet()){
             Point pointAfterZoom = performAffineTransformation(center, new Point(coef, center.getY()), new Point(center.getX(), coef), realPoint);
